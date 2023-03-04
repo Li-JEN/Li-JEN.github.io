@@ -1,17 +1,22 @@
-mkdir adapter/swd
-mkdir adapter/mmd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_adapter_mmd_better/decode_train.loss.ave/test_phn/wav ./adapter/mmd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_adapter_swd_better/decode_train.loss.ave/test_phn/wav ./adapter/swd
-mkdir reprogram/swd
-mkdir reprogram/mmd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_reprogram_mmd_better/decode_train.loss.ave/test_phn/wav ./reprogram/mmd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_reprogram_swd_reproduce_4/decode_train.loss.ave/test_phn/wav ./reprogram/swd
-
-mkdir reprogram_input/swd
-mkdir reprogram_input/mmd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_reprogram_input_swd_better/decode_train.loss.ave/test_phn/wav ./reprogram_input/swd
-cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_reprogram_input_mmd_better/decode_train.loss.ave/test_phn/wav ./reprogram_input/mmd
-# mkdir FT
-# cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_g2pw/decode_train.loss.ave/test_phn/wav ./FT
-# mkdir DFT
-# cp -r /home/espnet/egs2/chatbot/tts1/exp/tts_finetune_fastpeech2_decoder_g2pw/decode_train.loss.ave/test_phn/wav ./DFT
+mkdir China/adapter/
+mkdir China/adapter/swd
+mkdir China/adapter/mmd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_adapter_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/adapter/
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_adapter_mmd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/adapter/mmd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_adapter_swd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/adapter/swd
+mkdir China/reprogram/
+mkdir China/reprogram/swd
+mkdir China/reprogram/mmd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram/
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_mmd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram/mmd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_swd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram/swd
+mkdir China/reprogram_input/
+mkdir China/reprogram_input/swd
+mkdir China/reprogram_input/mmd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_input_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram_input/
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_input_swd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram_input/swd
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_reprogram_input_mmd_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/reprogram_input/mmd
+mkdir China/FT
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/FT
+mkdir China/DFT
+cp -r /home/espnet/egs2/csmsc/tts1/exp/tts_finetune_fastpeech2_decoder_hlr/decode_fastspeech_train.loss.ave/eval1/wav ./China/DFT

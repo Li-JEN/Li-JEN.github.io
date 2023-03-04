@@ -1,0 +1,2 @@
+#utterances: 100
+Average: 8.0258 ± 0.8024
