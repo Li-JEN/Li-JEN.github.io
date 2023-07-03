@@ -1,0 +1,12 @@
+*_reg
+*.py
+*.ipynb
+*000001*
+*8455_210777_000067_000000*
+thesis/ljspeech/nycuka
+thesis/nycuka/gt
+thesis/nycuka/out
+*.txt
+*vctk*
+*npy*
+*The foremost assignment of the Committee would be to insure that the maximum resources of the Federal Government are fully engaged in the job of protecting the President._[0]*
