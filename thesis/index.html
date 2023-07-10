@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bilingual Text-to-speech Demo</title>
+  </head>
+  <body>
+
+<h2>Nycuka - Chinese Speech</h2>
+<table class="table" border="1">
+    <tr>
+        <td style="text-align: left;" > Prompt Speech </td>
+        <td> 揚眉吐氣 </td>
+        <td><audio  src="nycuka\023_loud.wav" controls style="width: 100pt;"></audio></td>
+    </tr>
+    <tr>
+        <th style="text-align: center;">Index</th>
+        <th>Text</th>
+        <!-- <th style="text-align: center;">Prompt Speech</th> -->
+        <th style="text-align: center;">Without Fine-tuning</th>
+        <th style="text-align: center;">Full Fine-tuning</th>
+        <th style="text-align: center;">Full Fine-tuning with Rehearsal</th>
+        <th style="text-align: center;">Adapter tuning</th>
+        <th style="text-align: center;">Adapter tuning with Rehearsal</th>
+        <th style="text-align: center;">Gated Adapter tuning with Rehearsal</th>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 1 </th>
+        <td>  老闆和員工誰比較大 </td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\nycuka\023_loud\best-valid-loss.pt\老闆和員工誰比較大_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\nycuka\023_loud\best-train-loss.pt\老闆和員工誰比較大_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\nycuka\023_loud\best-train-loss.pt\老闆和員工誰比較大_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\nycuka2\023_loud\best-train-loss.pt\老闆和員工誰比較大_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\nycuka2\023_loud\best-train-loss.pt\老闆和員工誰比較大_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\nycuka\023_loud\best-train-loss.pt\老闆和員工,誰比較大_[1].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 2 </th>
+        <td >  先有男生還是先有女生 </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\nycuka\023_loud\best-valid-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\nycuka\023_loud\best-train-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\nycuka\023_loud\best-train-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\nycuka2\023_loud\best-train-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\nycuka2\023_loud\best-train-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\nycuka\023_loud\best-train-loss.pt\先有男生還是先有女生_[1].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 3 </th>
+        <td >  誰是最失敗的人 </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\nycuka\023_loud\best-valid-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\nycuka\023_loud\best-train-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\nycuka\023_loud\best-train-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\nycuka2\023_loud\best-train-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\nycuka2\023_loud\best-train-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\nycuka\023_loud\best-train-loss.pt\誰是最失敗的人_[1].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 4 </th>
+        <td >  他究竟是做什麼工作的 </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\nycuka\023_loud\best-valid-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\nycuka\023_loud\best-train-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\nycuka\023_loud\best-train-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\nycuka2\023_loud\best-train-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\nycuka2\023_loud\best-train-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\nycuka\023_loud\best-train-loss.pt\他究竟是做什麼工作的_[1].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 5 </th>
+        <td >  因為老天有眼 </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\nycuka\023_loud\best-valid-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\nycuka\023_loud\best-train-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\nycuka\023_loud\best-train-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\nycuka2\023_loud\best-train-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\nycuka2\023_loud\best-train-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\nycuka\023_loud\best-train-loss.pt\因為老天有眼_[1].wav" none controls></audio></td>
+    </tr>
+</table>
+
+
+<br/>
+<br/>
+<h2>Nycuka - English Speech</h2>
+<table class="table" border="1">
+
+    <tr>
+        <td style="text-align: left;" > Prompt Speech </td>
+        <td> 揚眉吐氣 </td>
+        <td><audio  src="nycuka\023_loud.wav" controls style="width: 100pt;"></audio></td>
+    </tr>
+    <tr>
+        <th style="text-align: center;">Index</th>
+        <th>Text</th>
+        <!-- <th style="text-align: center;">Prompt Speech</th> -->
+        <th style="text-align: center;">Without Fine-tuning</th>
+        <th style="text-align: center;">Full Fine-tuning</th>
+        <th style="text-align: center;">Full Fine-tuning with Rehearsal</th>
+        <th style="text-align: center;">Adapter tuning</th>
+        <th style="text-align: center;">Adapter tuning with Rehearsal</th>
+        <th style="text-align: center;">Gated Adapter tuning with Rehearsal</th>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 1 </th>
+        <td>  In eighteen ninety-four. </td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\ljspeech/023_loud\best-valid-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\ljspeech/023_loud\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\ljspeech/023_loud\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\ljspeech/023_loud\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\ljspeech/023_loud\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\ljspeech/023_loud\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 2 </th>
+        <td >  The Secret Service must rely in large part. </td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\ljspeech/023_loud\best-valid-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\ljspeech/023_loud\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\ljspeech/023_loud\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\ljspeech/023_loud\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\ljspeech/023_loud\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\ljspeech/023_loud\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 3 </th>
+        <td >  of the person who is actually in the exercise of the executive power. </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\ljspeech/023_loud\best-valid-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\ljspeech/023_loud\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\ljspeech/023_loud\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\ljspeech/023_loud\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\ljspeech/023_loud\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\ljspeech/023_loud\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 4 </th>
+        <td >  The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council. </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\ljspeech/023_loud\best-valid-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\ljspeech/023_loud\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\ljspeech/023_loud\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\ljspeech/023_loud\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\ljspeech/023_loud\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\ljspeech/023_loud\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;"> 5 </th>
+        <td >  by defining responsibilities clearly and overseeing their execution. </td>
+        <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\023_loud.wav" none controls></audio></td> -->
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\ljspeech/023_loud\best-valid-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft\ljspeech/023_loud\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ft_c\ljspeech/023_loud\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad\ljspeech/023_loud\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_ad_c\ljspeech/023_loud\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+        <td style="text-align: center;"><audio style="width: 80pt;" src="nycuka\infer_adg\ljspeech/023_loud\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    </tr>
+</table>
+<h2>LJspeech - Chinese Speech</h2>
+<table class="table" border="1">
+<tr>
+   
+    <td style="text-align: left;" > Prompt Speech </td>
+    <td> Has never been surpass </td>
+    <td><audio  src="ljspeech/LJ001-0008.wav" controls style="width: 100pt;"></audio></td>
+</tr>
+<tr>
+    <th style="text-align: center;">Index</th>
+    <th>Text</th>
+    <!-- <th style="text-align: center;">Prompt Speech</th> -->
+    <th style="text-align: center;">settings 1</th>
+    <th style="text-align: center;">settings 2</th>
+    <th style="text-align: center;">settings 3</th>
+    <th style="text-align: center;">settings 4</th>
+    <th style="text-align: center;">settings 5</th>
+    <th style="text-align: center;">settings 6</th>
+</tr>
+<tr>
+    <td style="text-align: center;"> 1 </th>
+    <td>  怎麼讓珍珠奶茶變大杯的 </td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/chinese_file_2\LJ001-0008\best-valid-loss.pt\怎麼讓珍珠奶茶變大杯的__[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\chinese_file_2\LJ001-0008\best-train-loss.pt\怎麼讓珍珠奶茶變大杯的_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\chinese_file_2\LJ001-0008\best-train-loss.pt\怎麼讓珍珠奶茶變大杯的_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\chinese_file_2\LJ001-0008\best-train-loss.pt\怎麼讓珍珠奶茶變大杯的_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\chinese_file_2\LJ001-0008\best-train-loss.pt\怎麼讓珍珠奶茶變大杯的_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\chinese_file_2\LJ001-0008\best-train-loss.pt\怎麼讓珍珠奶茶變大杯的_[1].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 2 </th>
+    <td >  豆腐為什麼能打傷人 </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/chinese_file_2\LJ001-0008\best-valid-loss.pt\豆腐為什麼能打傷人__[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\chinese_file_2\LJ001-0008\best-train-loss.pt\豆腐為什麼能打傷人_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\chinese_file_2\LJ001-0008\best-train-loss.pt\豆腐為什麼能打傷人_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\chinese_file_2\LJ001-0008\best-train-loss.pt\豆腐為什麼能打傷人_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\chinese_file_2\LJ001-0008\best-train-loss.pt\豆腐為什麼能打傷人_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\chinese_file_2\LJ001-0008\best-train-loss.pt\豆腐為什麼能打傷人_[1].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 3 </th>
+    <td >  念大悲咒 </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/chinese_file_2\LJ001-0008\best-valid-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\chinese_file_2\LJ001-0008\best-train-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\chinese_file_2\LJ001-0008\best-train-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\chinese_file_2\LJ001-0008\best-train-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\chinese_file_2\LJ001-0008\best-train-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\chinese_file_2\LJ001-0008\best-train-loss.pt\念大悲咒_[1].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 4 </th>
+    <td >  兩眼開開準備投胎 </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/chinese_file_2\LJ001-0008\best-valid-loss.pt\兩眼開開,準備投胎_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\chinese_file_2\LJ001-0008\best-train-loss.pt\兩眼開開準備投胎_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\chinese_file_2\LJ001-0008\best-train-loss.pt\兩眼開開準備投胎_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\chinese_file_2\LJ001-0008\best-train-loss.pt\兩眼開開準備投胎_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\chinese_file_2\LJ001-0008\best-train-loss.pt\兩眼開開準備投胎_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\chinese_file_2\LJ001-0008\best-train-loss.pt\兩眼開開準備投胎_[1].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 5 </th>
+    <td >  什麼東西晚上才會生出尾巴 </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/chinese_file_2\LJ001-0008\best-valid-loss.pt\什麼東西晚上才會生出尾巴__[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\chinese_file_2\LJ001-0008\best-train-loss.pt\什麼東西晚上才會生出尾巴_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\chinese_file_2\LJ001-0008\best-train-loss.pt\什麼東西晚上才會生出尾巴_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\chinese_file_2\LJ001-0008\best-train-loss.pt\什麼東西晚上才會生出尾巴_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\chinese_file_2\LJ001-0008\best-train-loss.pt\什麼東西晚上才會生出尾巴_[1].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\chinese_file_2\LJ001-0008\best-train-loss.pt\什麼東西晚上才會生出尾巴_[1].wav" none controls></audio></td>
+</tr>
+</table>
+
+
+<br/>
+<br/>
+<h2>LJspeech - English Speech</h2>
+<table class="table" border="1">
+
+<tr>
+
+    <td style="text-align: left;" > Prompt Speech </td>
+    <td> Has never been surpass </td>
+    <td><audio  src="ljspeech/LJ001-0008.wav" controls style="width: 100pt;"></audio></td>
+</tr>
+<tr>
+    <th style="text-align: center;">Index</th>
+    <th>Text</th>
+    <!-- <th style="text-align: center;">Prompt Speech</th> -->
+    <th style="text-align: center;">settings 1</th>
+    <th style="text-align: center;">settings 2</th>
+    <th style="text-align: center;">settings 3</th>
+    <th style="text-align: center;">settings 4</th>
+    <th style="text-align: center;">settings 5</th>
+    <th style="text-align: center;">settings 6</th>
+</tr>
+<tr>
+    <td style="text-align: center;"> 1 </th>
+    <td>  In eighteen ninety-four. </td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/ljspeech/LJ001-0008\best-valid-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\ljspeech/LJ001-0008\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\ljspeech/LJ001-0008\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\ljspeech/LJ001-0008\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\ljspeech/LJ001-0008\best-train-loss.pt\In eighteen ninety-four._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\ljspeech/LJ001-0008\best-train-loss.pt\in eighteen ninety-four._[0].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 2 </th>
+    <td >  The Secret Service must rely in large part. </td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/ljspeech/LJ001-0008\best-valid-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\ljspeech/LJ001-0008\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\ljspeech/LJ001-0008\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\ljspeech/LJ001-0008\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\ljspeech/LJ001-0008\best-train-loss.pt\The Secret Service must rely in large part._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\ljspeech/LJ001-0008\best-train-loss.pt\the secret service must rely in large part._[0].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 3 </th>
+    <td >  of the person who is actually in the exercise of the executive power. </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/ljspeech/LJ001-0008\best-valid-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\ljspeech/LJ001-0008\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\ljspeech/LJ001-0008\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\ljspeech/LJ001-0008\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\ljspeech/LJ001-0008\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\ljspeech/LJ001-0008\best-train-loss.pt\of the person who is actually in the exercise of the executive power._[0].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 4 </th>
+    <td >  The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council. </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/ljspeech/LJ001-0008\best-valid-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\ljspeech/LJ001-0008\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\ljspeech/LJ001-0008\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\ljspeech/LJ001-0008\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\ljspeech/LJ001-0008\best-train-loss.pt\The Commission suggests that consideration might be given to assigning to a Cabinet-level committee or the National Security Council._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\ljspeech/LJ001-0008\best-train-loss.pt\the commission suggests that consideration might be given to assigning to a cabinet-level committee or the national security council._[0].wav" none controls></audio></td>
+</tr>
+<tr>
+    <td style="text-align: center;"> 5 </th>
+    <td >  by defining responsibilities clearly and overseeing their execution. </td>
+    <!-- <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/LJ001-0008.wav" none controls></audio></td> -->
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/ljspeech/LJ001-0008\best-valid-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft\ljspeech/LJ001-0008\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ft_c\ljspeech/LJ001-0008\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad\ljspeech/LJ001-0008\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_ad_c\ljspeech/LJ001-0008\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+    <td style="text-align: center;"><audio style="width: 80pt;" src="ljspeech/infer_adg\ljspeech/LJ001-0008\best-train-loss.pt\by defining responsibilities clearly and overseeing their execution._[0].wav" none controls></audio></td>
+</tr>
+</table>
+
+</body>
+</html>
