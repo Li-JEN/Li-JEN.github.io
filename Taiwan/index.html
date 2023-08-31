@@ -4,379 +4,427 @@
     <meta charset="utf-8">
     <title>Interspeech 2023</title>
   </head>
-  <body>
-    <h1>Parameter-Efficient Learning for Text-to-Speech Accent Adaptation - Taiwan</h1>
+<body>
+    <h1>Parameter-Efficient Learning for Text-to-Speech Accent Adaptation</h1>
 
-<p>Hello guys, This is the result of my proposed methods. I hope you can help me to do the human evaluation with 
-    MOS <br> The table below shows the five-level of rating.
+    <h2 id="abstract">Abstract</h2>
+    <p>This paper presents a parameter-efficient learning (PEL) to develop a low-resource accent adaptation for text-to-speech (TTS). A resource-efficient adaptation from a frozen pre-trained TTS model is developed by using only 1.2\% to 0.8\% of original trainable parameters to achieve competitive performance in voice synthesis. Motivated by a theoretical foundation of optimal transport (OT), this study carries out PEL for TTS where an auxiliary unsupervised loss based on OT is introduced to maximize a difference between the pre-trained source domain and the (unseen) target domain, in addition to its supervised training loss. Further, we leverage upon this unsupervised loss refinement to boost system performance via either sliced Wasserstein distance or maximum mean discrepancy. The merit of this work is demonstrated by fulfilling PEL solutions based on residual adapter learning, and model reprogramming when evaluating the Mandarin accent adaptation. Experiment results show that the proposed methods can achieve competitive naturalness with parameter-efficient decoder fine-tuning, and the auxiliary unsupervised loss improves model performance empirically.</p>
 
-<table class="table" border="1"><thead>
-    <caption>MOS criterion</caption>
-    <tr>
-        <th style="text-align: center;">Rating</th>
-        <th style="text-align: center;">Label</th>
-        <!-- <th style="text-align: center;">settings 6</th> -->
-    </tr>
-</thead>
-<tbody>
-    <tr>
-        <td style="text-align: center;"> 5 </th>
-        <td style="text-align: center;">Excellent<none controls></audio></td>
-    </tr>
-    <tr>
-        <td style="text-align: center;"> 4 </th>
-        <td style="text-align: center;">Good<none controls></audio></td>
-    </tr>
-    <tr>
-        <td style="text-align: center;"> 3 </th>
-        <td style="text-align: center;">Fair<none controls></audio></td>
-    </tr>
-    <tr>
-        <td style="text-align: center;"> 2 </th>
-        <td style="text-align: center;">Poor<none controls></audio></td>
-    </tr>
-    <tr>
-        <td style="text-align: center;"> 1 </th>
-        <td style="text-align: center;">Bad<none controls></audio></td>
-    </tr>
-</tbody>
-</table>
-</p>
-<div>Here are two things need to judge
-<ul><li>Naturalness</li>
-<li>Accent quality</li>
-</ul>
-Both of them follow the same criterion above. <br>
-<a href="https://forms.gle/aEbDzZzX4SDPZXh28">Here is the link of sheet</a>, Please refer to the audio file and fill it.
-<br> Thanks for your help again <br>
-
-Cheers and wish everyone's dream come true  <br><br>
-LiJen
-</div>
-
-
-
-<h3>Mean opinion score for basic settings</h3>
-<p class="lead"></p>
+<h2>Audio samples</h2>
+All the audio samples are produced by the same Parallel-WaveGan  vocoder
+<h3><li> zh-TW accent</li></h3>
+<p> 1. 但不是一開始就在現場，而是中途後才加入 <br> He is not at the scene at the beginning but joined after halfway.</p>
+<p class="lead">
     <table class="table">
         <thead>
             <tr>
-                <th style="text-align: center;">Index</th>
                 <th style="text-align: center;">Ground Truth</th>
-                <th style="text-align: center;">settings 1</th>
-                <th style="text-align: center;">settings 2</th>
-                <th style="text-align: center;">settings 3</th>
-                <th style="text-align: center;">settings 4</th>
-                <th style="text-align: center;">settings 5</th>
-                <th style="text-align: center;">settings 6</th>
+                <th style="text-align: center;">FT</th>
+                <th style="text-align: center;">Decoder-FT</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td style="text-align: center;"> 1 </th>
-                <td style="text-align: center;"><audio src="./test_gt/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/101302_034.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/101302_034.wav" none controls></audio></td>
-            </tr>
-            <tr>
-                <td style="text-align: center;"> 2 </th>
                 <td style="text-align: center;"><audio src="./test_gt/101302_051.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/101302_051.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/101302_051.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/101302_051.wav" none controls></audio></td>
                 <td style="text-align: center;"><audio src="./FT/wav/101302_051.wav" none controls></audio></td>
                 <td style="text-align: center;"><audio src="./DFT/wav/101302_051.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/101302_051.wav" none controls></audio></td>
             </tr>
             <tr>
-                <td style="text-align: center;"> 3 </th>
-                <td style="text-align: center;"><audio src="./test_gt/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/101303_011.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/101303_011.wav" none controls></audio></td>
+            <th style="text-align: center;">Input reprogram</th>
+            <th style="text-align: center;">Adapter</th>
+            <!-- <th style="text-align: center;">BitFit</th> -->
+            <th style="text-align: center;">Input + latent reprogram</th>
             </tr>
             <tr>
-                <td style="text-align: center;"> 4 </th>
-                <td style="text-align: center;"><audio src="./test_gt/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/102003_061.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/102003_061.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram_input/wav/101302_051.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/wav/101302_051.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/wav/101302_051.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/wav/101302_051.wav" none controls></audio></td>
             </tr>
+            <th style="text-align: center;">Input reprogram - SWD</th>
+            <th style="text-align: center;">Adapter - SWD</th>
+            <!-- <th style="text-align: center;">BitFit - SWD</th> -->
+            <th style="text-align: center;">Input + latent reprogram - SWD</th>
             <tr>
-                <td style="text-align: center;"> 5 </th>
-                <td style="text-align: center;"><audio src="./test_gt/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/102704_003.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/102704_003.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101302_051.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/swd/wav/101302_051.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/swd/101302_051.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/swd/wav/101302_051.wav" none controls></audio></td>
             </tr>
-            <!-- <tr>
-                <td style="text-align: center;"> 6 </th>
+            <th style="text-align: center;">Input reprogram - MMD</th>
+            <th style="text-align: center;">Adapter - MMD</th>
+            <!-- <th style="text-align: center;">BitFit - MMD</th> -->
+            <th style="text-align: center;">Input + latent reprogram - MMD</th>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101302_051.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/mmd/wav/101302_051.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/mmd/101302_051.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101302_051.wav" none controls></audio></td>
+            </tr>
+        </tbody>
+        </table>
+        <p>2. 但也不算太差，可以說是部中等以上水準的影集 /It's not too bad, it can be said to be an album of above-average level.</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="text-align: center;">Ground Truth</th>
+                    <th style="text-align: center;">FT</th>
+                    <th style="text-align: center;">Decoder-FT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;"><audio src="./test_gt/101302_082.wav" none controls></audio></td>
+                    <td style="text-align: center;"><audio src="./FT/wav/101302_082.wav" none controls></audio></td>
+                    <td style="text-align: center;"><audio src="./DFT/wav/101302_082.wav" none controls></audio></td>
+                    
+                </tr>
+                <tr>
+                <th style="text-align: center;">Input reprogram</th>
+                <th style="text-align: center;">Adapter</th>
+                <!-- <th style="text-align: center;">BitFit</th> -->
+                <th style="text-align: center;">Input + latent reprogram</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center;"><audio src="./reprogram_input/wav/101302_082.wav" none controls></audio></td>
+                    <td style="text-align: center;"><audio src="./adapter/wav/101302_082.wav" none controls></audio></td>
+                    <!-- <td style="text-align: center;"><audio src="./BitFit/wav/101302_082.wav" none controls></audio></td> -->
+                    <td style="text-align: center;"><audio src="./reprogram/wav/101302_082.wav" none controls></audio></td>
+                </tr>
+                <th style="text-align: center;">Input reprogram - SWD</th>
+                <th style="text-align: center;">Adapter - SWD</th>
+                <!-- <th style="text-align: center;">BitFit - SWD</th> -->
+                <th style="text-align: center;">Input + latent reprogram - SWD</th>
+                <tr>
+                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101302_082.wav" none controls></audio></td>
+                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101302_082.wav" none controls></audio></td>
+                    <!-- <td style="text-align: center;"><audio src="./BitFit/swd/101302_082.wav" none controls></audio></td> -->
+                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101302_082.wav" none controls></audio></td>
+                </tr>
+                <th style="text-align: center;">Input reprogram - MMD</th>
+                <th style="text-align: center;">Adapter - MMD</th>
+                <!-- <th style="text-align: center;">BitFit - MMD</th> -->
+                <th style="text-align: center;">Input + latent reprogram - MMD</th>
+                <tr>
+                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101302_082.wav" none controls></audio></td>
+                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101302_082.wav" none controls></audio></td>
+                    <!-- <td style="text-align: center;"><audio src="./BitFit/mmd/101302_082.wav" none controls></audio></td> -->
+                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101302_082.wav" none controls></audio></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>3. 甚麼動物最沒有方向感 / Which animal has the least sense of direction?</p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Ground Truth</th>
+                <th style="text-align: center;">FT</th>
+                <th style="text-align: center;">Decoder-FT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
                 <td style="text-align: center;"><audio src="./test_gt/102705_030.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/102705_030.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/102705_030.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/102705_030.wav" none controls></audio></td>
                 <td style="text-align: center;"><audio src="./FT/wav/102705_030.wav" none controls></audio></td>
                 <td style="text-align: center;"><audio src="./DFT/wav/102705_030.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/102705_030.wav" none controls></audio></td>
+                
             </tr>
             <tr>
-                <td style="text-align: center;"> 7 </th>
-                <td style="text-align: center;"><audio src="./test_gt/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/102706_020.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/102706_020.wav" none controls></audio></td>
-
+            <th style="text-align: center;">Input reprogram</th>
+            <th style="text-align: center;">Adapter</th>
+            <!-- <th style="text-align: center;">BitFit</th> -->
+            <th style="text-align: center;">Input + latent reprogram</th>
             </tr>
             <tr>
-                <td style="text-align: center;"> 8 </th>
-                <td style="text-align: center;"><audio src="./test_gt/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/102003_007.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/102003_007.wav" none controls></audio></td>
-
+                <td style="text-align: center;"><audio src="./reprogram_input/wav/102705_030.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/wav/102705_030.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram/wav/102705_030.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/wav/102705_030.wav" none controls></audio></td> -->
             </tr>
+            <th style="text-align: center;">Input reprogram - SWD</th>
+                <th style="text-align: center;">Adapter - SWD</th>
+                <!-- <th style="text-align: center;">BitFit - SWD</th> -->
+                <th style="text-align: center;">Input + latent reprogram - SWD</th>
             <tr>
-                <td style="text-align: center;"> 9 </th>
-                <td style="text-align: center;"><audio src="./test_gt/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/101302_082.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/101302_082.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102705_030.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/swd/wav/102705_030.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/swd/102705_030.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/swd/wav/102705_030.wav" none controls></audio></td>
             </tr>
+            <th style="text-align: center;">Input reprogram - MMD</th>
+            <th style="text-align: center;">Adapter - MMD</th>
+            <!-- <th style="text-align: center;">BitFit - MMD</th> -->
+            <th style="text-align: center;">Input + latent reprogram - MMD</th>
             <tr>
-                <td style="text-align: center;"> 10 </th>
-                <td style="text-align: center;"><audio src="./test_gt/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./adapter/wav/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram/wav/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./reprogram_input/wav/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./FT/wav/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./DFT/wav/101303_029.wav" none controls></audio></td>
-                <td style="text-align: center;"><audio src="./BitFit/wav/101303_029.wav" none controls></audio></td>
-            </tr> -->
+                <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102705_030.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/mmd/wav/102705_030.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/mmd/102705_030.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102705_030.wav" none controls></audio></td>
+            </tr>
         </tbody>
-    </table>
-
-    <h3>Mean opinion score for OT settings - SWD</h3>
-    <p class="lead"></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th style="text-align: center;">Index</th>
-                    <th style="text-align: center;">Ground Truth</th>
-                    <th style="text-align: center;">settings 1</th>
-                    <th style="text-align: center;">settings 2</th>
-                    <th style="text-align: center;">settings 3</th>
-                    <th style="text-align: center;">settings 4</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align: center;"> 1 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/101302_034.wav" none controls></audio></td>
-
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 2 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/101302_051.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 3 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/101303_011.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 4 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/102003_061.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 5 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/102704_003.wav" none controls></audio></td>
-                </tr>
-                <!-- <tr>
-                    <td style="text-align: center;"> 6 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/102705_030.wav" none controls></audio></td>
-    
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 7 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/102706_020.wav" none controls></audio></td>
-    
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 8 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/102003_007.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 9 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/101302_082.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 10 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/swd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/swd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/swd/101303_029.wav" none controls></audio></td>
-                </tr> -->
-            </tbody>
         </table>
-
-        <h3>Mean opinion score for OT settings - MMD</h3>
+        <p>4. 我那時老愛去漫畫店 / I used to love going to comic shops</p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Ground Truth</th>
+                <th style="text-align: center;">FT</th>
+                <th style="text-align: center;">Decoder-FT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;"><audio src="./test_gt/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./FT/wav/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./DFT/wav/102001_017.wav" none controls></audio></td>
+                
+            </tr>
+            <tr>
+            <th style="text-align: center;">Input reprogram</th>
+            <th style="text-align: center;">Residual Adapter</th>
+            <!-- <th style="text-align: center;">BitFit</th> -->
+            <th style="text-align: center;">Input + latent reprogram</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/wav/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/wav/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram/wav/102001_017.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/wav/102001_017.wav" none controls></audio></td> -->
+            </tr>
+            <th style="text-align: center;">Input reprogram - SWD</th>
+                <th style="text-align: center;">Adapter - SWD</th>
+                <!-- <th style="text-align: center;">BitFit - SWD</th> -->
+                <th style="text-align: center;">Input + latent reprogram - SWD</th>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/swd/wav/102001_017.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/swd/102001_017.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/swd/wav/102001_017.wav" none controls></audio></td>
+            </tr>
+            <th style="text-align: center;">Input reprogram - MMD</th>
+            <th style="text-align: center;">Adapter - MMD</th>
+            <!-- <th style="text-align: center;">BitFit - MMD</th> -->
+            <th style="text-align: center;">Input + latent reprogram - MMD</th>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102001_017.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/mmd/wav/102001_017.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/mmd/102001_017.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102001_017.wav" none controls></audio></td>
+            </tr>
+        </tbody>
+        </table>
+        </p>
+        <p>5. 魷魚遊戲的企劃發想始於12年前/ The planning idea of squid game started 12 years ago </p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th style="text-align: center;">Ground Truth</th>
+                <th style="text-align: center;">FT</th>
+                <th style="text-align: center;">Decoder-FT</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="text-align: center;"><audio src="./test_gt/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./FT/wav/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./DFT/wav/102002_025.wav" none controls></audio></td>
+                
+            </tr>
+            <tr>
+            <th style="text-align: center;">Input reprogram</th>
+            <th style="text-align: center;">Residual Adapter</th>
+            <!-- <th style="text-align: center;">BitFit</th> -->
+            <th style="text-align: center;">Input + latent reprogram</th>
+            </tr>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/wav/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/wav/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./reprogram/wav/102002_025.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/wav/102001_017.wav" none controls></audio></td> -->
+            </tr>
+            <th style="text-align: center;">Input reprogram - SWD</th>
+                <th style="text-align: center;">Adapter - SWD</th>
+                <!-- <th style="text-align: center;">BitFit - SWD</th> -->
+                <th style="text-align: center;">Input + latent reprogram - SWD</th>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/swd/wav/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/swd/wav/102002_025.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/swd/102001_017.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/swd/wav/102002_025.wav" none controls></audio></td>
+            </tr>
+            <th style="text-align: center;">Input reprogram - MMD</th>
+            <th style="text-align: center;">Adapter - MMD</th>
+            <!-- <th style="text-align: center;">BitFit - MMD</th> -->
+            <th style="text-align: center;">Input + latent reprogram - MMD</th>
+            <tr>
+                <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102002_025.wav" none controls></audio></td>
+                <td style="text-align: center;"><audio src="./adapter/mmd/wav/102002_025.wav" none controls></audio></td>
+                <!-- <td style="text-align: center;"><audio src="./BitFit/mmd/102001_017.wav" none controls></audio></td> -->
+                <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102002_025.wav" none controls></audio></td>
+            </tr>
+        </tbody>
+        </table>
+        </p>
+        <!-- <h3><li>Seen accent</li></h3>
+        <p> 這種車票和保險單綑綁出售屬於重複性購買 \ This bundled ticket and insurance policy is a recurring purchase</p>
         <p class="lead"></p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th style="text-align: center;">Index</th>
-                    <th style="text-align: center;">Ground Truth</th>
-                    <th style="text-align: center;">settings 1</th>
-                    <th style="text-align: center;">settings 2</th>
-                    <th style="text-align: center;">settings 3</th>
-                    <th style="text-align: center;">settings 4</th>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Ground Truth</th>
+                        <th style="text-align: center;">FT</th>
+                        <th style="text-align: center;">Decoder-FT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/Wave_down/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/FT/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/DFT/wav/009905.wav" none controls></audio></td>
+                    </tr>
+                    <tr>
+                    <th style="text-align: center;">Input reprogram</th>
+                    <th style="text-align: center;">Adapter</th>
+                    <th style="text-align: center;">BitFit</th>
+                    <th style="text-align: center;">Input + latent reprogram</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/wav/009905.wav" none controls></audio></td>
+                    </tr>
 
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align: center;"> 1 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101302_034.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/101302_034.wav" none controls></audio></td>
+                    <th style="text-align: center;">Input reprogram - SWD</th>
+                    <th style="text-align: center;">Adapter - SWD</th>
+                    <th style="text-align: center;">BitFit - SWD </th>
+                    <th style="text-align: center;">Input + latent reprogram - SWD</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/swd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/swd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/swd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/swd/wav/009905.wav" none controls></audio></td>
+                    </tr>
+                    <th style="text-align: center;">Input reprogram - MMD</th>
+                    <th style="text-align: center;">Adapter - MMD</th>
+                    <th style="text-align: center;">BitFit - MMD</th>
+                    <th style="text-align: center;">Input + latent reprogram - MMD</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/mmd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/mmd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/mmd/wav/009905.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/mmd/wav/009905.wav" none controls></audio></td>
+                    </tr>
+                </tbody>
+                </table>
+                <p>這幾天雨水不斷，人們恨不得待在家裡不出門 / 
+                    It has been raining continuously for the past few days, and people can't wait to stay at home and not go out</p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">Ground Truth</th>
+                            <th style="text-align: center;">FT</th>
+                            <th style="text-align: center;">Decoder-FT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align: center;"><audio src="./China/Wave_down/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/FT/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/DFT/wav/009910.wav" none controls></audio></td>
+                        </tr>
+                        <tr>
+                        <th style="text-align: center;">Input reprogram</th>
+                        <th style="text-align: center;">Adapter</th>
+                        <th style="text-align: center;">BitFit</th>
+                        <th style="text-align: center;">Input + latent reprogram</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><audio src="./China/reprogram_input/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/adapter/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/BitFit/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/reprogram/wav/009910.wav" none controls></audio></td>
+                        </tr>
 
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 2 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101302_051.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/101302_051.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 3 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101303_011.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/101303_011.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 4 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102003_061.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/102003_061.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 5 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102704_003.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/102704_003.wav" none controls></audio></td>
-                </tr>
-                <!-- <tr>
-                    <td style="text-align: center;"> 6 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102705_030.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/102705_030.wav" none controls></audio></td>
-    
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 7 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102706_020.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/102706_020.wav" none controls></audio></td>
-    
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 8 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/102003_007.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/102003_007.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 9 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101302_082.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/101302_082.wav" none controls></audio></td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;"> 10 </th>
-                    <td style="text-align: center;"><audio src="./test_gt/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./adapter/mmd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram/mmd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./reprogram_input/mmd/wav/101303_029.wav" none controls></audio></td>
-                    <td style="text-align: center;"><audio src="./BitFit/mmd/101303_029.wav" none controls></audio></td>
-                </tr> -->
-            </tbody>
-        </table>
-</body>
+                        <th style="text-align: center;">Input reprogram - SWD</th>
+                        <th style="text-align: center;">Adapter - SWD</th>
+                        <th style="text-align: center;">BitFit - SWD </th>
+                        <th style="text-align: center;">Input + latent reprogram - SWD</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><audio src="./China/reprogram_input/swd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/adapter/swd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/BitFit/swd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/reprogram/swd/wav/009910.wav" none controls></audio></td>
+                        </tr>
+                        <th style="text-align: center;">Input reprogram - MMD</th>
+                        <th style="text-align: center;">Adapter - MMD</th>
+                        <th style="text-align: center;">BitFit - MMD</th>
+                        <th style="text-align: center;">Input + latent reprogram - MMD</th>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;"><audio src="./China/reprogram_input/mmd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/adapter/mmd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/BitFit/mmd/wav/009910.wav" none controls></audio></td>
+                            <td style="text-align: center;"><audio src="./China/reprogram/mmd/wav/009910.wav" none controls></audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>也就是說今晚成都市民極有可能再度看到飄雪 / The citizens of Chengdu are very likely to see snow again tonight. </p>
+                <table class="table">
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Ground Truth</th>
+                        <th style="text-align: center;">FT</th>
+                        <th style="text-align: center;">Decoder-FT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/Wave_down/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/FT/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/DFT/wav/009915.wav" none controls></audio></td>
+                    </tr>
+                    <tr>
+                    <th style="text-align: center;">Input reprogram</th>
+                    <th style="text-align: center;">Adapter</th>
+                    <th style="text-align: center;">BitFit</th>
+                    <th style="text-align: center;">Input + latent reprogram</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/wav/009915.wav" none controls></audio></td>
+                    </tr>
+
+                    <th style="text-align: center;">Input reprogram - SWD</th>
+                    <th style="text-align: center;">Adapter - SWD</th>
+                    <th style="text-align: center;">BitFit - SWD </th>
+                    <th style="text-align: center;">Input + latent reprogram - SWD</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/swd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/swd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/swd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/swd/wav/009915.wav" none controls></audio></td>
+                    </tr>
+                    <th style="text-align: center;">Input reprogram - MMD</th>
+                    <th style="text-align: center;">Adapter - MMD</th>
+                    <th style="text-align: center;">BitFit - MMD</th>
+                    <th style="text-align: center;">Input + latent reprogram - MMD</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"><audio src="./China/reprogram_input/mmd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/adapter/mmd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/BitFit/mmd/wav/009915.wav" none controls></audio></td>
+                        <td style="text-align: center;"><audio src="./China/reprogram/mmd/wav/009915.wav" none controls></audio></td>
+                    </tr>
+                </tbody>
+                </table> -->
+        
+        
+    </body>
 </html>
