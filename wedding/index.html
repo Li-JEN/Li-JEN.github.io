@@ -564,6 +564,34 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
 .cal{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
 .cal .btn{margin-top:0;min-height:38px;font-size:11px;letter-spacing:.06em;background:var(--cream);color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;font-family:var(--body);font-weight:700}
 
+
+/* ================= v3：抽小卡改成一句話（可輸入名字抽專屬卡） ================= */
+.namebox{display:flex;gap:8px;justify-content:center;align-items:center;margin-top:2px}
+.namebox input{width:min(56vw,210px);height:38px;border:1.5px solid var(--ink);border-radius:999px;background:var(--cream);color:var(--ink);padding:0 14px;font:500 14px var(--body);text-align:center}
+.namebox input:focus{outline:3px solid var(--brick);outline-offset:1px}
+.namebox small{display:block;text-align:center;font-size:11px;color:var(--soft);margin-top:4px}
+.pack-scene{--w:min(54vw,206px,27svh)}
+.dcard{padding:0;background:none}
+.dface{position:relative;width:100%;height:100%;border-radius:14px;overflow:hidden;padding:12px 12px 10px;display:flex;flex-direction:column;color:var(--ink);
+  background:linear-gradient(160deg,#ECE7F2,#C8B7E3);border:5px solid #fff}
+.dface.mission{background:linear-gradient(160deg,#B9A3DC,#7A62A8);color:#fff}
+.dface.fortune{background:linear-gradient(160deg,#F6F3FA,#D6E1F0 55%,#B9A3DC)}
+.dface.cheer{background:linear-gradient(160deg,#FFFFFF,#E9DDF3 60%,#C8B7E3)}
+.dface.song{background:linear-gradient(160deg,#3B3552,#2E2A40 60%,#7A62A8);color:#fff}
+.dface.ssr{background:linear-gradient(135deg,#E8C77A,#F6F3FA 30%,#B9A3DC 55%,#D6E1F0 75%,#E8C77A);background-size:220% 220%;animation:ssr 4s ease-in-out infinite}
+@keyframes ssr{50%{background-position:100% 100%}}
+.dface .top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:9px;letter-spacing:.16em}
+.dface .cat{border:1px solid currentColor;border-radius:999px;padding:2px 7px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:76%;font-size:8px}
+.dface .rar{position:static;font-size:10px;letter-spacing:.12em;border-radius:999px;padding:2px 8px;background:rgba(46,42,64,.55);color:#fff}
+.dface .rar.sr{background:#7A62A8}
+.dface .rar.ssr{background:linear-gradient(90deg,#7A62A8,#E8C77A);color:#fff}
+.dface .ico{font-size:calc(var(--w) * .14);line-height:1;margin:10px 0 6px}
+.dface .to{font-family:var(--display);font-size:clamp(12px,calc(var(--w) * .068),16px);opacity:.9}
+.dface .msg{font-size:clamp(13px,calc(var(--w) * .078),17px);font-weight:700;line-height:1.5;margin-top:4px}
+.dface .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-family:var(--mono);font-size:9px;letter-spacing:.12em;opacity:.85}
+.dface .foot b{font-family:var(--display);font-weight:400;font-size:clamp(14px,calc(var(--w) * .09),20px);letter-spacing:0;line-height:1;white-space:nowrap}
+.dface .holo{position:absolute;inset:0;border-radius:9px}
+
 /* ---------- TRACKLIST 播放器 ---------- */
 .player{background:var(--cream);border:2px solid var(--ink);border-radius:16px;padding:14px 0 10px;--a:clamp(200px,min(54vw,36svh),236px)}
 .reel{touch-action:pan-x;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;outline:0}
@@ -782,23 +810,29 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
   </div>
 </section>
 
-<!-- 06 · 抽限定小卡 -->
+<!-- 06 · 抽限定小卡：一句話小卡，輸入名字抽專屬的 -->
 <section id="pd" class="drop page sheet" aria-label="抽限定小卡">
   <div class="tags a a-up"><span class="pill red">LUCKY DRAW</span><span class="tag">PHOTOCARD</span></div>
-  <div class="draw-head a a-up" style="--d:.15s"><h2>抽一張限定小卡</h2><p>撕開卡包，看看你抽到哪一張</p></div>
+  <div class="draw-head a a-up" style="--d:.15s"><h2>抽一張春日小卡</h2><p>輸入名字抽專屬卡，或直接撕開卡包</p></div>
+  <div class="namebox a a-up noflip" style="--d:.3s"><div><input id="dNameIn" type="text" maxlength="16" placeholder="你的名字（可不填）" aria-label="你的名字，可不填" autocomplete="off" enterkeyhint="done"><small id="dNameTip">同一個名字，永遠抽到同一張喔</small></div></div>
   <div class="pack-scene a a-pop noflip" id="packScene" style="--d:.4s">
     <div class="dcard" id="dcard" aria-live="polite">
-      <div class="ph"><img id="dImg" src="img/t4.jpg" alt="" width="800" height="800"><i class="holo" aria-hidden="true"></i>
-        <span class="rar" id="dRar">R</span>
-        <div class="txt"><b id="dName"></b><span id="dLine"></span><small id="dNo"></small></div></div>
+      <div class="dface" id="dFace">
+        <div class="top"><span class="cat" id="dCat"></span><span class="rar" id="dRar"></span></div>
+        <div class="ico" id="dIco" aria-hidden="true"></div>
+        <div class="to" id="dTo"></div>
+        <p class="msg" id="dMsg"></p>
+        <div class="foot"><span id="dNo"></span><b id="dLucky"></b></div>
+        <i class="holo" aria-hidden="true"></i>
+      </div>
     </div>
     <button type="button" class="pack" id="pack" aria-label="撕開卡包，抽一張小卡">
       <span class="pk-top" aria-hidden="true"></span>
-      <span class="pk-body" aria-hidden="true"><span>SPRING VOW</span><b>Photo<br>card</b><span>RANDOM 1 OF 7</span><i>點一下撕開</i></span>
+      <span class="pk-body" aria-hidden="true"><span>SPRING VOW</span><b>Lucky<br>card</b><span id="pkN">RANDOM 1 OF 26</span><i>點一下撕開</i></span>
     </button>
   </div>
   <div class="draw-ctrl" id="drawCtrl"><button type="button" id="again">↻ 再抽一張</button><button type="button" class="pri" id="saveCard">⤓ 存下這張</button></div>
-  <p class="collect" id="collect">已收集 <b>0</b> / 7</p>
+  <p class="collect" id="collect">已收集 <b>0</b> / 26</p>
 </section>
 
 <!-- 07 · CREDITS -->
@@ -1017,7 +1051,7 @@ var body = document.body;
   window.addEventListener('wheel',function(e){ if(body.classList.contains('viewer-open')) return; if(e.target.closest && e.target.closest('.film-scroll') && Math.abs(e.deltaX)>Math.abs(e.deltaY)) return; if(e.target.closest && e.target.closest('.reel') && Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
     e.preventDefault(); var now=Date.now(); if(now<wheelLock||Math.abs(e.deltaY)<12) return; wheelLock=now+950;
     go(e.deltaY>0?cur+1:cur-1); },{passive:false});
-  document.addEventListener('keydown',function(e){ if(body.classList.contains('locked')||body.classList.contains('viewer-open')) return;
+  document.addEventListener('keydown',function(e){ if(body.classList.contains('locked')||body.classList.contains('viewer-open')||(e.target.closest&&e.target.closest('input,textarea'))) return;
     if(['ArrowDown','PageDown',' '].indexOf(e.key)>-1 && !(e.target.closest&&e.target.closest('button,.reel,a,.pc'))){ e.preventDefault(); go(cur+1); }
     if(['ArrowUp','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); } });
   for(var k=0;k<dots.length;k++) (function(k){ dots[k].addEventListener('click',function(e){ e.preventDefault(); go(k+1); }); })(k);
@@ -1188,53 +1222,102 @@ var body = document.body;
   window.trackMusic=function(){ if(window.Music) window.Music.track(window.Music.MAIN); };
 })();
 
-/* ---------- 06 抽限定小卡：撕開卡包、隨機抽、收集、存成圖片 ---------- */
+/* ---------- 06 抽小卡：一句話小卡。不填名字＝隨機；填名字＝同名字永遠同一張 ---------- */
 (function(){
+  /* 想改內容就改這裡：cat 類別（mission 婚禮任務／fortune 春日運勢／cheer 應援語錄／song 本日 BGM／ssr 隱藏卡）、rar 稀有度（R／SR／SSR） */
   var CARDS=[
-    {img:'img/groom.jpg',name:'LiJen',line:'主唱擔當報到！謝謝你來',rar:'R'},
-    {img:'img/bride.jpg',name:'Hsinti',line:'門面擔當在這裡，春天見 ♡',rar:'R'},
-    {img:'img/cover.jpg',name:'Spring Vow',line:'我們要結婚了！',rar:'R'},
-    {img:'img/t1.jpg',name:'Hello',line:'一切從那場演唱會開始',rar:'R'},
-    {img:'img/t2.jpg',name:'Bon Voyage',line:'謝謝你一路陪著我們',rar:'R'},
-    {img:'img/t3.jpg',name:'Yes!',line:'她說好了！',rar:'R'},
-    {img:'img/t4.jpg',name:'Spring Vow',line:'2027.03.20，等你來 ♡',rar:'SP'}
+    {cat:'mission',rar:'R',ico:'🎤',msg:'找新郎擊掌一次，大聲說「恭喜回歸！」'},
+    {cat:'mission',rar:'R',ico:'💐',msg:'跟新娘說：今天是門面擔當本人！'},
+    {cat:'mission',rar:'R',ico:'🥂',msg:'跟隔壁桌交換一句祝福，交到新朋友加分'},
+    {cat:'mission',rar:'R',ico:'📸',msg:'拍一張你跟喜帖的自拍，標記新人'},
+    {cat:'mission',rar:'R',ico:'📣',msg:'敬酒時幫新郎喊一次應援口號'},
+    {cat:'mission',rar:'R',ico:'🫰',msg:'合照時比出你最拿手的 K-pop 手勢'},
+    {cat:'mission',rar:'R',ico:'💜',msg:'找到一位穿紫色的賓客，跟他說你也抽到小卡了'},
+    {cat:'fortune',rar:'R',ico:'🍀',msg:'本日幸運色：丁香紫。穿上它，運氣 +100'},
+    {cat:'fortune',rar:'R',ico:'🍰',msg:'今天適合多吃一塊蛋糕，熱量已被愛情抵銷'},
+    {cat:'fortune',rar:'R',ico:'🌸',msg:'你的桃花運正在回歸倒數中，請保持期待'},
+    {cat:'fortune',rar:'R',ico:'🍽️',msg:'幸運食物：喜宴上的第三道菜'},
+    {cat:'fortune',rar:'R',ico:'💐',msg:'今日大吉！搶捧花成功率 +30%'},
+    {cat:'fortune',rar:'R',ico:'👛',msg:'你的錢包會在三月悄悄變胖（紅包除外）'},
+    {cat:'cheer',rar:'SR',ico:'💌',msg:'謝謝你成為我們故事裡的一頁 ♡'},
+    {cat:'cheer',rar:'SR',ico:'⭐',msg:'你是我們的 VIP：Very Important Person'},
+    {cat:'cheer',rar:'SR',ico:'🏅',msg:'這張小卡證明：你是 Spring Vow 的初代粉絲'},
+    {cat:'cheer',rar:'SR',ico:'🗓️',msg:'三月見，不見不散！我們在舞台上等你'},
+    {cat:'cheer',rar:'SR',ico:'🪄',msg:'應援棒準備好了嗎？3/20 一起尖叫'},
+    {cat:'cheer',rar:'SR',ico:'🎁',msg:'你的出席就是最好的禮物（紅包也很好）'},
+    {cat:'song',rar:'SR',ico:'🎵',msg:'本日 BGM：IU〈Love poem〉，獻給溫柔的你'},
+    {cat:'song',rar:'SR',ico:'🎵',msg:'本日 BGM：i-dle〈Peter Pan〉，獻給永遠年輕的你'},
+    {cat:'song',rar:'SR',ico:'🎵',msg:'本日 BGM：〈Stay With Me〉，獻給專一的你'},
+    {cat:'song',rar:'SR',ico:'🎵',msg:'本日 BGM：i-dle〈7Days〉，獻給想放假的你'},
+    {cat:'ssr',rar:'SSR',ico:'✨',msg:'恭喜抽中 SSR！婚禮當天找新人領一個擁抱'},
+    {cat:'ssr',rar:'SSR',ico:'🥂',msg:'隱藏卡：新郎新娘欠你一杯酒'},
+    {cat:'ssr',rar:'SSR',ico:'💍',msg:'傳說級好運：今年你也會遇到你的 Spring Vow'}
   ];
-  var scene=document.getElementById('packScene'), pack=document.getElementById('pack'), ctrl=document.getElementById('drawCtrl'), col=document.getElementById('collect');
-  var KEY='sv-cards', got=[], curI=-1, busy=false;
+  /* 第 3 層（之後再填）：給特定親友的專屬訊息，用連結 ?k=代碼 打開。例：'a7x2':{to:'阿嬤',msg:'……'} */
+  var SPECIAL={};
+  var LABEL={mission:'MISSION 婚禮任務',fortune:'FORTUNE 春日運勢',cheer:'CHEER 應援語錄',song:'TODAY’S BGM',ssr:'SECRET 隱藏卡'};
+  var WEIGHT={R:4,SR:3,SSR:1};                       /* 稀有度越高越難抽 */
+  var bag=[]; CARDS.forEach(function(c,i){ for(var k=0;k<WEIGHT[c.rar];k++) bag.push(i); });
+  var scene=document.getElementById('packScene'), pack=document.getElementById('pack'), ctrl=document.getElementById('drawCtrl'), col=document.getElementById('collect'),
+      nameIn=document.getElementById('dNameIn'), tip=document.getElementById('dNameTip'), again=document.getElementById('again');
+  document.getElementById('pkN').textContent='RANDOM 1 OF '+CARDS.length;
+  var KEY='sv-cards2', got=[], curI=-1, curLucky=0, curTo='', busy=false;
   try{ got=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(_){ got=[]; }
   function showCount(){ col.innerHTML='已收集 <b>'+got.length+'</b> / '+CARDS.length+(got.length>=CARDS.length?' · 全部收集完成 ♡':''); }
   showCount();
-  function pick(){ var left=CARDS.map(function(_,i){ return i; }).filter(function(i){ return got.indexOf(i)<0 && i!==curI; });
-    if(!left.length) left=CARDS.map(function(_,i){ return i; }).filter(function(i){ return i!==curI; });
-    return left[Math.floor(Math.random()*left.length)]; }
-  function fill(i){ var c=CARDS[i]; curI=i;
-    document.getElementById('dImg').src=c.img; document.getElementById('dImg').alt=c.name+' 小卡';
-    document.getElementById('dName').textContent=c.name; document.getElementById('dLine').textContent=c.line;
-    var r=document.getElementById('dRar'); r.textContent=c.rar; r.classList.toggle('sp',c.rar==='SP');
-    document.getElementById('dNo').textContent='No.'+(i+1)+' / '+CARDS.length+' · SPRING VOW'; }
-  function tear(){ if(busy||scene.classList.contains('torn')) return; busy=true; fill(pick());
+  function hash(str){ var h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); }
+    h^=h>>>16; h=Math.imul(h,0x85ebca6b); h^=h>>>13; h=Math.imul(h,0xc2b2ae35); h^=h>>>16; return h>>>0; }   /* 打散，讓不同名字平均分到各張卡 */
+  function norm(n){ return n.replace(/\s+/g,'').toLowerCase(); }
+  function pick(name){
+    if(name){ var h=hash('springvow:'+norm(name)); return {i:bag[h%bag.length], lucky:(h>>>9)%99+1}; }
+    var left=bag.filter(function(i){ return got.indexOf(i)<0 && i!==curI; }); if(!left.length) left=bag.filter(function(i){ return i!==curI; });
+    return {i:left[Math.floor(Math.random()*left.length)], lucky:Math.floor(Math.random()*99)+1};
+  }
+  function fill(r,to,special){
+    var c=special?{cat:'ssr',rar:'SSR',ico:'💜',msg:special.msg}:CARDS[r.i]; curI=special?-1:r.i; curLucky=r.lucky; curTo=to;
+    var f=document.getElementById('dFace'); f.className='dface '+c.cat;
+    document.getElementById('dCat').textContent=special?'FOR YOU 專屬卡':LABEL[c.cat];
+    var rr=document.getElementById('dRar'); rr.textContent=c.rar; rr.className='rar '+c.rar.toLowerCase();
+    document.getElementById('dIco').textContent=c.ico;
+    document.getElementById('dTo').textContent=to?'給 '+to+' 的春日小卡':'';
+    document.getElementById('dMsg').textContent=c.msg;
+    document.getElementById('dNo').textContent=special?'FOR YOU':'No.'+(r.i+1)+'/'+CARDS.length;
+    document.getElementById('dLucky').textContent='LUCKY '+(r.lucky<10?'0':'')+r.lucky;
+    return c;
+  }
+  function tear(){ if(busy||scene.classList.contains('torn')) return; busy=true;
+    var name=nameIn.value.trim(), code=(location.search.match(/[?&]k=([^&]+)/)||[])[1], sp=code&&SPECIAL[code];
+    var c=fill(sp?{lucky:(hash(code)%99)+1}:pick(name), sp?(sp.to||name):name, sp);
+    again.textContent=name?'↻ 換個名字':'↻ 再抽一張';
     scene.classList.add('torn'); if(window.burst) setTimeout(function(){ window.burst(26,'petal'); },700);
     setTimeout(function(){ scene.classList.add('shown'); ctrl.classList.add('show'); busy=false;
-      if(got.indexOf(curI)<0){ got.push(curI); try{ localStorage.setItem(KEY,JSON.stringify(got)); }catch(_){} } showCount();
-      if(CARDS[curI].rar==='SP' && window.burst) window.burst(60,'confetti'); },reduce?0:1300); }
+      if(curI>=0 && got.indexOf(curI)<0){ got.push(curI); try{ localStorage.setItem(KEY,JSON.stringify(got)); }catch(_){} } showCount();
+      if(c.rar==='SSR' && window.burst) window.burst(70,'confetti'); },reduce?0:1300); }
   pack.addEventListener('click',tear);
   var px=0,py=0; pack.addEventListener('pointerdown',function(e){ px=e.clientX; py=e.clientY; });
   pack.addEventListener('pointerup',function(e){ if(Math.hypot(e.clientX-px,e.clientY-py)>30) tear(); });
-  document.getElementById('again').addEventListener('click',function(){ ctrl.classList.remove('show'); scene.classList.remove('shown','torn'); setTimeout(function(){ pack.focus({preventScroll:true}); },400); });
+  nameIn.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); nameIn.blur(); if(!scene.classList.contains('torn')) tear(); } });
+  again.addEventListener('click',function(){ ctrl.classList.remove('show'); scene.classList.remove('shown','torn');
+    if(nameIn.value.trim()){ nameIn.value=''; setTimeout(function(){ nameIn.focus(); },420); } else setTimeout(function(){ pack.focus({preventScroll:true}); },420); });
   /* 存成圖片 */
+  function wrap(g,text,x,y,maxW,lh){ var line='', lines=[]; Array.from(text).forEach(function(ch){ var t=line+ch; if(g.measureText(t).width>maxW && line){ lines.push(line); line=ch; } else line=t; }); lines.push(line);
+    lines.forEach(function(l,k){ g.fillText(l,x,y+k*lh); }); return lines.length; }
   document.getElementById('saveCard').addEventListener('click',function(){
-    var c=CARDS[curI], W=600, H=900, cv=document.createElement('canvas'), g=cv.getContext('2d'); cv.width=W; cv.height=H;
-    var im=new Image(); im.onload=function(){
-      g.fillStyle='#fff'; g.beginPath(); g.roundRect?g.roundRect(0,0,W,H,36):g.rect(0,0,W,H); g.fill();
-      g.save(); g.beginPath(); g.roundRect?g.roundRect(16,16,W-32,H-32,24):g.rect(16,16,W-32,H-32); g.clip();
-      var s=Math.max((W-32)/im.width,(H-32)/im.height), w=im.width*s, h=im.height*s; g.drawImage(im,16+(W-32-w)/2,16+(H-32-h)/2,w,h);
-      var gr=g.createLinearGradient(0,H*.6,0,H); gr.addColorStop(0,'rgba(46,42,64,0)'); gr.addColorStop(1,'rgba(46,42,64,.8)'); g.fillStyle=gr; g.fillRect(0,0,W,H); g.restore();
-      g.fillStyle='#fff'; g.font='400 58px "Cherry Bomb One",sans-serif'; g.fillText(c.name,44,H-120);
-      g.font='500 28px "Noto Sans TC",sans-serif'; g.fillText(c.line,44,H-76);
-      g.font='500 18px "DM Mono",monospace'; g.globalAlpha=.85; g.fillText('No.'+(curI+1)+' / '+CARDS.length+' · SPRING VOW · 2027.03.20',44,H-44); g.globalAlpha=1;
-      g.fillStyle=c.rar==='SP'?'#E8C77A':'rgba(46,42,64,.65)'; g.fillRect(40,40,c.rar==='SP'?64:46,34); g.fillStyle=c.rar==='SP'?'#3B3552':'#fff'; g.font='500 20px "DM Mono",monospace'; g.fillText(c.rar,52,64);
-      cv.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='SpringVow-photocard-'+(curI+1)+'.png'; body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },2000); },'image/png');
-    }; im.src=c.img;
+    var W=600,H=900, cv=document.createElement('canvas'), g=cv.getContext('2d'); cv.width=W; cv.height=H;
+    var f=document.getElementById('dFace'), cat=f.className.split(' ')[1], dark=(cat==='mission'||cat==='song');
+    var G={mission:['#B9A3DC','#7A62A8'],fortune:['#F6F3FA','#B9A3DC'],cheer:['#FFFFFF','#C8B7E3'],song:['#3B3552','#7A62A8'],ssr:['#E8C77A','#B9A3DC']}[cat];
+    g.fillStyle='#fff'; g.beginPath(); g.roundRect?g.roundRect(0,0,W,H,40):g.rect(0,0,W,H); g.fill();
+    var gr=g.createLinearGradient(0,0,W*.4,H); gr.addColorStop(0,G[0]); gr.addColorStop(1,G[1]);
+    g.save(); g.beginPath(); g.roundRect?g.roundRect(16,16,W-32,H-32,28):g.rect(16,16,W-32,H-32); g.clip(); g.fillStyle=gr; g.fillRect(0,0,W,H); g.restore();
+    var fg=dark?'#FFFFFF':'#3B3552'; g.fillStyle=fg;
+    g.font='500 20px "DM Mono",monospace'; g.fillText(document.getElementById('dCat').textContent,50,80);
+    g.textAlign='right'; g.fillText(document.getElementById('dRar').textContent,W-50,80); g.textAlign='left';
+    g.font='84px sans-serif'; g.fillText(document.getElementById('dIco').textContent,46,210);
+    g.font='400 32px "Cherry Bomb One",sans-serif'; g.fillText(document.getElementById('dTo').textContent,50,280);
+    g.font='700 40px "Noto Sans TC",sans-serif'; wrap(g,document.getElementById('dMsg').textContent,50,350,W-100,62);
+    g.font='500 18px "DM Mono",monospace'; g.globalAlpha=.85; g.fillText(document.getElementById('dNo').textContent+' · SPRING VOW',50,H-56); g.fillText('2027.03.20 · LIJEN ♡ HSINTI',50,H-84); g.globalAlpha=1;
+    g.textAlign='right'; g.font='400 40px "Cherry Bomb One",sans-serif'; g.fillText(document.getElementById('dLucky').textContent,W-50,H-52);
+    cv.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='SpringVow-card.png'; body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },2000); },'image/png');
   });
 })();
 
