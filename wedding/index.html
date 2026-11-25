@@ -366,8 +366,10 @@ html:not(.js) .bk-cover{display:none}
 @media (prefers-reduced-motion:reduce){.bk-cover{display:none}}
 @media (prefers-reduced-motion:no-preference){
   /* 歌詞本封面翻開 */
-  html.js .bk-cover{transition:transform 1.3s cubic-bezier(.6,0,.2,1) .35s}
-  html.js .page.on .bk-cover{transform:rotateY(-150deg)}
+  html.js .bk-cover{transition:transform 1.1s cubic-bezier(.3,.7,.2,1)}
+  html.js .bk-cover.drag{transition:none}
+  html.js .booklet.opened .bk-cover{transform:rotateY(-155deg)}
+  html.js .booklet:not(.opened) [data-split] .ch{opacity:0;transform:translateY(.7em) rotate(-14deg) scale(.4)}
   html.js .booklet{transition:transform .8s var(--spring),opacity .3s ease}
   html.js .page:not(.on) .booklet{opacity:0;transform:translateY(40px) scale(.94)}
   /* 小卡滑出、鐳射反光、提示可翻面 */
@@ -430,6 +432,138 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
 .np.show{visibility:visible}
 .np a{color:var(--soft);font-family:var(--mono);font-size:10px;letter-spacing:.1em;margin-left:6px}
 
+
+/* ================= v2：開封膜＋翻開歌詞本 ================= */
+.booklet .wrapfilm{position:absolute;inset:-8px;z-index:4;width:calc(100% + 16px);height:calc(100% + 16px);border-radius:12px 20px 20px 12px;touch-action:none;cursor:grab}
+.booklet .wrapfilm.peel{transition:transform .7s cubic-bezier(.5,0,.3,1),opacity .5s ease .2s;transform:translate(70%,-40%) rotate(24deg);opacity:0;pointer-events:none}
+.booklet .wrapfilm.wiggle{animation:wig .4s}
+@keyframes wig{25%{transform:rotate(-1deg)}75%{transform:rotate(1deg)}}
+.bk-cover{cursor:grab;touch-action:none}
+.bk-cover em{position:absolute;bottom:14px;right:16px;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.16em;opacity:.85;animation:nudgeL 1.6s ease-in-out infinite}
+@keyframes nudgeL{50%{transform:translateX(-6px)}}
+.booklet.opened .bk-cover{pointer-events:none}
+.bk-hint{display:block;margin:10px auto 0;border:0;background:none;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--brick);cursor:pointer;animation:breathe 1.8s ease-in-out infinite}
+.bk-hint[hidden]{display:none}
+@keyframes breathe{50%{opacity:.45}}
+.bk-photo::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.booklet.opened .bk-photo::after{animation:flash .9s ease .55s both}
+.keepsake{position:absolute;z-index:3;right:-6px;top:40%;width:58px;pointer-events:none;opacity:0;transform:rotate(18deg)}
+.booklet.opened .keepsake{animation:fallin 1.7s cubic-bezier(.3,.6,.4,1) .9s both}
+@keyframes fallin{0%{opacity:0;transform:translate(-120px,-220px) rotate(-40deg)}15%{opacity:1}45%{transform:translate(-40px,-90px) rotate(30deg)}70%{transform:translate(-70px,-30px) rotate(-6deg)}100%{opacity:1;transform:translate(0,0) rotate(18deg)}}
+
+/* ================= v2：膠捲故事 ================= */
+.film-head{text-align:center}
+.film-head h2{font-family:var(--display);font-weight:400;font-size:34px;line-height:1.05}
+.film-head p{font-size:13px;color:var(--soft);margin-top:2px}
+.film-scroll{overflow-x:auto;overflow-y:hidden;touch-action:pan-x;scrollbar-width:none;margin:0 -20px;padding:6px 0;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;outline:0}
+.film-scroll::-webkit-scrollbar{display:none}
+.strip{position:relative;display:flex;gap:10px;width:max-content;padding:22px 22vw 26px;background:#2E2A40;box-shadow:0 14px 28px rgba(59,53,82,.28)}
+.strip::before,.strip::after{content:"";position:absolute;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,transparent 0 7px,rgba(236,231,242,.92) 7px 15px,transparent 15px 22px)}
+.strip::before{top:7px}.strip::after{bottom:9px}
+.frame{position:relative;flex:none;width:min(36vw,150px,22svh);scroll-snap-align:center;border:0;padding:0;background:#15131f;cursor:pointer;border-radius:2px;-webkit-tap-highlight-color:transparent}
+.frame img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
+.frame figcaption,.frame .code{position:absolute;left:0;right:0;bottom:-18px;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:#E8C77A}
+.frame .todo-dot{position:absolute;left:6px;top:6px;font-family:var(--mono);font-size:8px;letter-spacing:.1em;background:rgba(46,42,64,.7);color:#fff;border-radius:999px;padding:1px 6px}
+.frame .songbadge{position:absolute;right:6px;top:6px;width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#B9A3DC 0 22%,#15131f 25% 100%);box-shadow:0 0 0 1.5px rgba(255,255,255,.75)}
+.frame:focus-visible{outline:3px solid #E8C77A;outline-offset:3px}
+.frame.cur{box-shadow:0 0 0 2px #E8C77A}
+.film-ctrl{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:6px}
+.film-ctrl .ctl{width:auto;padding:0 16px;border-radius:999px;height:38px;font-family:var(--mono);font-size:11px;letter-spacing:.12em}
+.film-count{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--soft);min-width:56px;text-align:center}
+.film-hint{text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--soft)}
+.beam{position:absolute;left:50%;top:-30px;width:70%;height:60%;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 0,rgba(255,244,210,.55),transparent 70%);opacity:0;pointer-events:none;mix-blend-mode:screen}
+.projecting .beam{opacity:1;animation:flick .18s steps(2) infinite}
+.projecting .strip{animation:flick2 .14s steps(2) infinite}
+@keyframes flick{50%{opacity:.75}}
+@keyframes flick2{50%{filter:brightness(1.08)}}
+@media (prefers-reduced-motion:no-preference){
+  html.js #p4 .strip{transition:transform 1.1s var(--ease) .2s}
+  html.js #p4:not(.on) .strip{transform:translateX(55%)}
+  html.js #p4 .frame img{transition:filter .9s ease,opacity .9s ease;transition-delay:calc(.9s + var(--i) * .12s)}
+  html.js #p4:not(.on) .frame img{filter:blur(6px);opacity:.25;transition-delay:0s}
+}
+
+/* --- 點開一格：看照片、翻背面看故事 --- */
+.viewer{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:16px;background:rgba(46,42,64,.9);opacity:0;pointer-events:none;transition:opacity .3s}
+.viewer.open{opacity:1;pointer-events:auto}
+.v-card{position:relative;width:min(86vw,340px);height:min(calc(min(86vw,340px) * 1.25 + 74px),74svh);transition:transform .22s ease-in,opacity .25s}
+.v-card.turning{transform:scaleX(.02)}
+.v-card.out-l{transform:translateX(-30%) rotate(-4deg);opacity:0}
+.v-card.out-r{transform:translateX(30%) rotate(4deg);opacity:0}
+.v-face{position:absolute;inset:0;border-radius:6px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.v-front{background:#fff;padding:12px 12px 0;display:flex;flex-direction:column}
+.v-photo{position:relative;flex:1;min-height:0;overflow:hidden;background:#15131f}
+.v-photo img{width:100%;height:100%;object-fit:cover}
+.v-photo::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.v-card.dev .v-photo img{animation:develop 1.5s ease both}
+.v-card.dev .v-photo::after{animation:flash .7s ease both}
+@keyframes develop{from{filter:blur(12px);opacity:.3;transform:scale(1.05)}to{filter:none;opacity:1;transform:none}}
+.v-cap{height:62px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.v-cap small{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brick)}
+.v-cap b{font-family:var(--display);font-weight:400;font-size:22px;line-height:1.1;color:var(--ink)}
+.v-back{background:var(--cream);background-image:repeating-linear-gradient(transparent 0 27px,rgba(122,98,168,.12) 27px 28px);padding:18px 18px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.v-back[hidden],.v-front[hidden]{display:none}
+.v-back .no{font-family:var(--mono);font-size:10px;letter-spacing:.16em;color:var(--brick)}
+.v-back h3{font-size:20px;line-height:1.3}
+.v-back .date{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--soft)}
+.v-back .story{font-size:15px;line-height:1.75;color:#4F4A66;margin-top:4px}
+.v-back .story.todo{color:#7D7895}
+.v-song{margin-top:auto;padding-top:10px;border-top:1.5px dashed rgba(59,53,82,.3)}
+.v-song[hidden]{display:none}
+.v-song .lbl{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--brick);margin-bottom:6px}
+.yt-box{position:relative;width:100%;height:200px;min-width:200px;border-radius:6px;overflow:hidden;background:#15131f}
+.yt-box iframe,.yt-box > div{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-box .yt-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;font-size:12px;text-align:center;padding:12px}
+.yt-box .yt-fallback button{border:1.5px solid #fff;background:none;color:#fff;border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer}
+.yt-box .yt-fallback a{color:#E8C77A;font-family:var(--mono);font-size:10px;letter-spacing:.1em}
+.v-song .np{height:auto;min-height:16px;margin:6px 0 0;white-space:normal;visibility:visible;font-size:11px}
+.v-ctrl{display:flex;align-items:center;gap:12px}
+.v-ctrl .ctl{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7);color:#fff}
+.v-flip{height:40px;padding:0 18px;border-radius:999px;border:0;background:#fff;color:var(--ink);font-size:13px;font-weight:700;cursor:pointer}
+.v-close{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:none;color:#fff;font-size:16px;cursor:pointer}
+.v-flip:focus-visible,.v-close:focus-visible{outline:3px solid #E8C77A;outline-offset:2px}
+
+/* ================= v2：抽限定小卡 ================= */
+.draw-head{text-align:center}
+.draw-head h2{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.1}
+.draw-head p{font-size:13px;color:var(--soft)}
+.pack-scene{position:relative;--w:min(58vw,220px,30svh);width:calc(var(--w) + 24px);height:calc(var(--w) * 1.5 + 40px);margin:4px auto 0}
+.dcard{position:absolute;left:12px;top:20px;width:var(--w);aspect-ratio:2/3;border-radius:14px;background:#fff;padding:6px;box-shadow:0 14px 30px rgba(59,53,82,.3);transform:translateY(18%) scale(.96);opacity:0;transition:transform .9s var(--spring),opacity .3s}
+.dcard .ph{position:relative;width:100%;height:100%;border-radius:9px;overflow:hidden}
+.dcard img{width:100%;height:100%;object-fit:cover}
+.dcard .holo{border-radius:9px}
+.dcard .rar{position:absolute;left:8px;top:8px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#fff;background:rgba(46,42,64,.6);border-radius:999px;padding:2px 8px}
+.dcard .rar.sp{background:linear-gradient(90deg,#B9A3DC,#E8C77A);color:var(--ink)}
+.dcard .txt{position:absolute;left:0;right:0;bottom:0;padding:30px 12px 10px;background:linear-gradient(transparent,rgba(46,42,64,.75));color:#fff}
+.dcard .txt b{display:block;font-family:var(--display);font-weight:400;font-size:22px;line-height:1.05}
+.dcard .txt span{font-size:12px}
+.dcard .txt small{display:block;margin-top:4px;font-family:var(--mono);font-size:9px;letter-spacing:.14em;opacity:.85}
+.pack{position:absolute;inset:0;border:0;padding:0;background:none;cursor:pointer;z-index:2;-webkit-tap-highlight-color:transparent;touch-action:none}
+.pack .pk-body,.pack .pk-top{position:absolute;left:0;right:0;border-radius:6px;background:linear-gradient(135deg,#C8B7E3,#7A62A8 45%,#D6E1F0 70%,#7A62A8);box-shadow:0 14px 30px rgba(59,53,82,.3)}
+.pack .pk-body{top:34px;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#fff;text-align:center;overflow:hidden}
+.pack .pk-body::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.55) 48%,transparent 60%) 140% 0/300% 100% no-repeat;animation:holo 3.6s ease-in-out infinite}
+.pack .pk-body b{font-family:var(--display);font-weight:400;font-size:34px;line-height:1}
+.pack .pk-body span{font-family:var(--mono);font-size:10px;letter-spacing:.22em}
+.pack .pk-body i{font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.16em;border:1px solid rgba(255,255,255,.7);border-radius:999px;padding:3px 10px;animation:breathe 1.8s ease-in-out infinite}
+.pack .pk-top{top:0;height:40px;-webkit-mask:linear-gradient(#000,#000) top/100% 32px no-repeat,conic-gradient(from -45deg at 50% 100%,#000 90deg,transparent 0) 0 100%/12px 8px repeat-x;mask:linear-gradient(#000,#000) top/100% 32px no-repeat,conic-gradient(from -45deg at 50% 100%,#000 90deg,transparent 0) 0 100%/12px 8px repeat-x;transform-origin:100% 100%}
+.pack .pk-top::before{content:"";position:absolute;left:10px;right:10px;top:28px;border-top:1.5px dashed rgba(255,255,255,.7)}
+.pack-scene.torn .pk-top{transition:transform .6s cubic-bezier(.5,0,.3,1),opacity .4s .2s;transform:translate(40px,-90px) rotate(28deg);opacity:0}
+.pack-scene.torn .pk-body{transition:transform .8s cubic-bezier(.5,0,.3,1) .45s,opacity .4s .7s;transform:translateY(70%);opacity:0}
+.pack-scene.torn .pack{pointer-events:none}
+.pack-scene.torn .dcard{opacity:1;transform:translateY(-6%) scale(1.04);transition-delay:.35s}
+.pack-scene.shown .dcard{transform:none;transition-delay:0s}
+.pack-scene.shown .dcard .holo{animation:holo1 1.3s ease-in-out both}
+.draw-ctrl{display:flex;justify-content:center;gap:10px;margin-top:4px;opacity:0;pointer-events:none;transition:opacity .4s}
+.draw-ctrl.show{opacity:1;pointer-events:auto}
+.draw-ctrl button{height:40px;padding:0 16px;border-radius:999px;border:1.5px solid var(--ink);background:var(--cream);color:var(--ink);font-size:13px;font-weight:700;cursor:pointer}
+.draw-ctrl button.pri{background:var(--ink);color:var(--cream)}
+.collect{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--soft)}
+.collect b{color:var(--brick)}
+
+/* ================= v2：行事曆 ================= */
+.cal{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.cal .btn{margin-top:0;min-height:38px;font-size:11px;letter-spacing:.06em;background:var(--cream);color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;font-family:var(--body);font-weight:700}
+
 /* ---------- TRACKLIST 播放器 ---------- */
 .player{background:var(--cream);border:2px solid var(--ink);border-radius:16px;padding:14px 0 10px;--a:clamp(200px,min(54vw,36svh),236px)}
 .reel{touch-action:pan-x;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;outline:0}
@@ -487,9 +621,20 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
 <audio id="bgm" src="audio/spring-vow.mp3" loop preload="auto"></audio>
 <button id="mini" class="vinyl" type="button" aria-label="暫停音樂" aria-pressed="true"><span class="label"><b>SV</b><i></i></span></button>
 <div id="ring" aria-hidden="true"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="照片與故事" aria-hidden="true">
+  <button type="button" class="v-close" id="vClose" aria-label="關閉">✕</button>
+  <div class="v-card" id="vCard">
+    <div class="v-face v-front" id="vFront"><div class="v-photo"><img id="vImg" src="img/t1.jpg" alt=""></div><div class="v-cap"><small id="vCode"></small><b id="vTitle"></b></div></div>
+    <div class="v-face v-back" id="vBack" hidden>
+      <span class="no" id="vbNo"></span><h3 id="vbTitle"></h3><span class="date" id="vbDate"></span><p class="story" id="vbStory"></p>
+      <div class="v-song" id="vSong" hidden><p class="lbl" id="vSongName"></p><div class="yt-box" id="ytBox"></div><p class="np" id="np" aria-live="polite"></p></div>
+    </div>
+  </div>
+  <div class="v-ctrl"><button type="button" class="ctl" id="vPrev" aria-label="上一格">◀</button><button type="button" class="v-flip" id="vFlip">↻ 翻到背面看故事</button><button type="button" class="ctl" id="vNext" aria-label="下一格">▶</button></div>
+</div>
 
 <nav class="dots" id="dots" aria-label="頁面">
-  <a href="#p1" aria-label="封面"></a><a href="#p2" aria-label="新郎"></a><a href="#p3" aria-label="新娘"></a><a href="#p4" aria-label="故事"></a><a href="#p5" aria-label="倒數與地點"></a><a href="#p6" aria-label="結尾"></a>
+  <a href="#p1" aria-label="封面"></a><a href="#p2" aria-label="新郎"></a><a href="#p3" aria-label="新娘"></a><a href="#p4" aria-label="故事"></a><a href="#p5" aria-label="倒數與地點"></a><a href="#pd" aria-label="抽小卡"></a><a href="#p6" aria-label="結尾"></a>
 </nav>
 
 <!-- 00 · SLEEVE -->
@@ -538,11 +683,14 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
         <figcaption>coming this spring!</figcaption>
       </figure>
       <div class="row"><span>THE 1ST WEDDING ALBUM</span><span>No.0320</span></div>
-      <h1 data-split style="--sd:1.5s">Spring Vow</h1>
+      <h1 data-split style="--sd:.6s">Spring Vow</h1>
       <div class="names"><b>楊立任 ＆ 王心玓</b><span>2027.03.20</span></div>
     </div>
-    <div class="bk-cover" aria-hidden="true"><i style="top:22%"></i><i style="bottom:22%"></i><span>LYRIC BOOK</span><b>Spring<br>Vow</b><small>THE 1ST WEDDING ALBUM · 2027</small></div>
+    <div class="bk-cover" aria-hidden="true"><i style="top:22%"></i><i style="bottom:22%"></i><span>LYRIC BOOK</span><b>Spring<br>Vow</b><small>THE 1ST WEDDING ALBUM · 2027</small><em>← OPEN</em></div>
+    <canvas class="wrapfilm" id="wrapfilm" aria-hidden="true"></canvas>
+    <svg class="keepsake" viewBox="0 0 60 90" aria-hidden="true"><path d="M30 44 C29 60 33 74 28 88" stroke="#8FA48A" stroke-width="2.2" fill="none"/><path d="M30 66 C38 60 44 62 47 58 C41 66 35 66 30 66Z" fill="#A9BBCB"/><g fill="#FFFFFF" stroke="#D9CCEE" stroke-width="1"><ellipse cx="30" cy="20" rx="8" ry="12"/><ellipse cx="30" cy="20" rx="8" ry="12" transform="rotate(72 30 32)"/><ellipse cx="30" cy="20" rx="8" ry="12" transform="rotate(144 30 32)"/><ellipse cx="30" cy="20" rx="8" ry="12" transform="rotate(216 30 32)"/><ellipse cx="30" cy="20" rx="8" ry="12" transform="rotate(288 30 32)"/></g><circle cx="30" cy="32" r="6" fill="#E8C77A"/></svg>
   </div>
+  <button type="button" class="bk-hint" id="bkHint">↔ 用手指劃開封膜</button>
 </section>
 
 <!-- 02 · 新郎小卡 -->
@@ -589,58 +737,23 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
   <p class="flip-hint a a-up" style="--d:1.5s"><b>↻ 點一下小卡</b>，看背面介紹</p>
 </section>
 
-<!-- 04 · TRACKLIST：左右滑的播放器，每首歌一張照片 -->
+<!-- 04 · 膠捲故事：拖動底片，點一格看照片與小故事 -->
 <section id="p4" class="drop page sheet" aria-label="我們的故事">
-  <div class="tags a a-up"><span class="pill">TRACKLIST · TURNTABLE</span><span class="tag" style="font-family:var(--display);font-size:13px;white-space:nowrap;letter-spacing:0;color:var(--brick);border-radius:999px;padding:2px 10px">LiJen ♡ Hsinti</span></div>
-  <div class="player a a-up" style="--d:.15s">
-    <div class="reel" id="reel" tabindex="0" aria-label="我們的故事，左右滑動切換">
-      <div class="slide cur" role="group" aria-label="第 1 首，共 4 首">
-        <div class="artwrap">
-          <div class="arm" aria-hidden="true"><i></i><b></b></div>
-          <button type="button" class="needle" data-yt="iOKRYIMhaDk" data-title="IU〈Love poem〉" aria-label="放下唱針，播放 IU〈Love poem〉"></button>
-          <div class="disc" aria-hidden="true"><div class="vinyl"><span class="label"><b>SV</b></span></div></div>
-          <div class="art"><img src="img/t1.jpg" alt="兩人在海邊拿著仙女棒" width="800" height="800" loading="eager"><div class="flash" aria-hidden="true"></div></div>
-        </div>
-        <div class="meta"><span class="no" style="--i:0">TRACK 01</span><span class="song" style="--i:1">Hello</span><h3 style="--i:2">初次相遇 · 2023</h3><div style="--i:3"><p>從碩班同學到伴侶，認識的起源就從 i-dle 的演唱會開始……</p></div><button type="button" class="yt-btn" style="--i:4" aria-label="放下唱針，播放 IU〈Love poem〉"><span class="pl" aria-hidden="true">▶</span><span class="eqmini" aria-hidden="true"><i></i><i></i><i></i></span> 點唱針播放 · IU〈Love poem〉</button></div>
-      </div>
-      <div class="slide" role="group" aria-label="第 2 首，共 4 首">
-        <div class="artwrap">
-          <div class="arm" aria-hidden="true"><i></i><b></b></div>
-          <button type="button" class="needle" data-yt="ypsaGJzyAjg" data-title="i-dle〈Peter Pan〉" aria-label="放下唱針，播放 i-dle〈Peter Pan〉"></button>
-          <div class="disc" aria-hidden="true"><div class="vinyl"><span class="label"><b>SV</b></span></div></div>
-          <div class="art"><img src="img/t2.jpg" alt="兩人穿著泰服牽手散步" width="800" height="800"><div class="flash" aria-hidden="true"></div></div>
-        </div>
-        <div class="meta"><span class="no" style="--i:0">TRACK 02</span><span class="song" style="--i:1">Bon Voyage</span><h3 style="--i:2">第一次一起出國 · 2024</h3><div style="--i:3"><p class="todo">[去了哪裡？旅途中難忘的小故事。]</p></div><button type="button" class="yt-btn" style="--i:4" aria-label="放下唱針，播放 i-dle〈Peter Pan〉"><span class="pl" aria-hidden="true">▶</span><span class="eqmini" aria-hidden="true"><i></i><i></i><i></i></span> 點唱針播放 · i-dle〈Peter Pan〉</button></div>
-      </div>
-      <div class="slide" role="group" aria-label="第 3 首，共 4 首">
-        <div class="artwrap">
-          <div class="arm" aria-hidden="true"><i></i><b></b></div>
-          <button type="button" class="needle" data-yt="pcKR0LPwoYs" data-title="燦烈 × Punch〈Stay With Me〉" aria-label="放下唱針，播放 燦烈 × Punch〈Stay With Me〉"></button>
-          <div class="disc" aria-hidden="true"><div class="vinyl"><span class="label"><b>SV</b></span></div></div>
-          <div class="art"><img src="img/t3.jpg" alt="兩人在迪士尼城堡前" width="800" height="800"><div class="flash" aria-hidden="true"></div></div>
-        </div>
-        <div class="meta"><span class="no" style="--i:0">TRACK 03</span><span class="song" style="--i:1">Yes!</span><h3 style="--i:2">迪士尼求婚 · 2025</h3><div style="--i:3"><p class="todo">[求婚當天的小故事。]</p></div><button type="button" class="yt-btn" style="--i:4" aria-label="放下唱針，播放 燦烈 × Punch〈Stay With Me〉"><span class="pl" aria-hidden="true">▶</span><span class="eqmini" aria-hidden="true"><i></i><i></i><i></i></span> 點唱針播放 · 燦烈 × Punch〈Stay With Me〉</button></div>
-      </div>
-      <div class="slide" role="group" aria-label="第 4 首，共 4 首">
-        <div class="artwrap">
-          <div class="arm" aria-hidden="true"><i></i><b></b></div>
-          <button type="button" class="needle" data-yt="xk9-O-NmIJo" data-title="i-dle〈7Days〉" aria-label="放下唱針，播放 i-dle〈7Days〉"></button>
-          <div class="disc" aria-hidden="true"><div class="vinyl"><span class="label"><b>SV</b></span></div></div>
-          <div class="art"><img src="img/t4.jpg" alt="兩人在海邊拿著仙女棒相擁" width="800" height="800"><div class="flash" aria-hidden="true"></div></div>
-        </div>
-        <div class="meta"><span class="no" style="--i:0">TRACK 04</span><span class="song" style="--i:1">Spring Vow</span><h3 style="--i:2">我們的婚禮<span class="title-tag">TITLE</span><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span></h3><div style="--i:3"><p><mark>2027.03.20（六）12:00</mark>，茹曦酒店見。</p></div><button type="button" class="yt-btn" style="--i:4" aria-label="放下唱針，播放 i-dle〈7Days〉"><span class="pl" aria-hidden="true">▶</span><span class="eqmini" aria-hidden="true"><i></i><i></i><i></i></span> 點唱針播放 · i-dle〈7Days〉</button></div>
-      </div>
+  <div class="tags a a-up"><span class="pill">FILM ROLL · OUR STORY</span><span class="tag" style="font-family:var(--display);font-size:13px;white-space:nowrap;letter-spacing:0;color:var(--brick);border-radius:999px;padding:2px 10px">LiJen ♡ Hsinti</span></div>
+  <div class="film-head a a-up" style="--d:.15s"><h2 data-split style="--sd:.3s">Our Story</h2><p>拖動底片，點一格看我們的故事</p></div>
+  <div class="film-scroll" id="filmScroll" tabindex="0" aria-label="底片，左右拖動">
+    <div class="beam" aria-hidden="true"></div>
+    <div class="strip" id="strip">
+      <button type="button" class="frame" style="--i:0" data-img="img/t1.jpg" data-date="2023" data-title="初次相遇" data-story="從碩班同學到伴侶，認識的起源就從 i-dle 的演唱會開始……" data-track="TRACK 01 · Hello" data-yt="iOKRYIMhaDk" data-song="IU〈Love poem〉" data-syn="audio/track1.mp3" aria-label="第 1 格：初次相遇，2023，有主題曲"><img src="img/t1.jpg" alt="" width="400" height="500"><span class="songbadge" aria-hidden="true"></span><span class="code" aria-hidden="true"><span>▸ 01A</span><span>2023</span></span></button>
+      <button type="button" class="frame" style="--i:1" data-img="img/cover.jpg" data-date="[年份待補]" data-title="[待補：一起做過的小事]" data-story="[待補：換成你們的照片與 1～3 句小故事。]" data-track="" data-todo="1" aria-label="第 2 格：[待補：一起做過的小事]，[年份待補]"><img src="img/cover.jpg" alt="" width="400" height="500"><span class="todo-dot" aria-hidden="true">待補</span><span class="code" aria-hidden="true"><span>▸ 02A</span><span>[年份待補]</span></span></button>
+      <button type="button" class="frame" style="--i:2" data-img="img/t2.jpg" data-date="2024" data-title="第一次一起出國" data-story="[去了哪裡？旅途中難忘的小故事。]" data-track="TRACK 02 · Bon Voyage" data-yt="ypsaGJzyAjg" data-song="i-dle〈Peter Pan〉" data-syn="audio/track2.mp3" aria-label="第 3 格：第一次一起出國，2024，有主題曲"><img src="img/t2.jpg" alt="" width="400" height="500"><span class="songbadge" aria-hidden="true"></span><span class="code" aria-hidden="true"><span>▸ 03A</span><span>2024</span></span></button>
+      <button type="button" class="frame" style="--i:3" data-img="img/bride.jpg" data-date="[年份待補]" data-title="[待補：另一個小片段]" data-story="[待補：換成你們的照片與 1～3 句小故事。]" data-track="" data-todo="1" aria-label="第 4 格：[待補：另一個小片段]，[年份待補]"><img src="img/bride.jpg" alt="" width="400" height="500"><span class="todo-dot" aria-hidden="true">待補</span><span class="code" aria-hidden="true"><span>▸ 04A</span><span>[年份待補]</span></span></button>
+      <button type="button" class="frame" style="--i:4" data-img="img/t3.jpg" data-date="2025" data-title="迪士尼求婚" data-story="[求婚當天的小故事。]" data-track="TRACK 03 · Yes!" data-yt="pcKR0LPwoYs" data-song="燦烈 × Punch〈Stay With Me〉" data-syn="audio/track3.mp3" aria-label="第 5 格：迪士尼求婚，2025，有主題曲"><img src="img/t3.jpg" alt="" width="400" height="500"><span class="songbadge" aria-hidden="true"></span><span class="code" aria-hidden="true"><span>▸ 05A</span><span>2025</span></span></button>
+      <button type="button" class="frame" style="--i:5" data-img="img/t4.jpg" data-date="2027.03.20" data-title="我們的婚禮" data-story="2027.03.20（六）12:00，茹曦酒店見。" data-track="TRACK 04 · Spring Vow" data-yt="xk9-O-NmIJo" data-song="i-dle〈7Days〉" data-syn="audio/track4.mp3" aria-label="第 6 格：我們的婚禮，2027.03.20，有主題曲"><img src="img/t4.jpg" alt="" width="400" height="500"><span class="songbadge" aria-hidden="true"></span><span class="code" aria-hidden="true"><span>▸ 06A</span><span>2027.03.20</span></span></button>
     </div>
-    <div class="yt-art" id="ytArt" aria-label="YouTube 播放器"></div>
-    <p class="np" id="np" aria-live="polite"></p>
-    <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
-    <div class="controls">
-      <button type="button" class="ctl" id="prev" aria-label="上一首">◀</button>
-      <div class="pdots" id="pdots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
-      <button type="button" class="ctl" id="next" aria-label="下一首">▶</button>
-    </div>
-    <p class="swipe-hint" aria-hidden="true">← 滑動切換 →</p>
   </div>
+  <div class="film-ctrl a a-up" style="--d:1.3s"><button type="button" class="ctl" id="fPrev" aria-label="上一格">◀</button><span class="film-count" id="fCount">01 / 06</span><button type="button" class="ctl" id="fNext" aria-label="下一格">▶</button><button type="button" class="ctl" id="fPlay" aria-pressed="false">▶ 放映</button></div>
+  <p class="film-hint a a-up" style="--d:1.6s" aria-hidden="true">♪ 有唱片記號的格子，背面有那一刻的歌</p>
 </section>
 
 <!-- 05 · 門票 -->
@@ -663,12 +776,32 @@ body.yt-on #petals{opacity:0;transition:opacity .3s}
       </dl>
       <div class="map a a-zoom" id="map" style="--d:.9s"><i class="ring" aria-hidden="true"></i><i class="ring" style="animation-delay:2.6s" aria-hidden="true"></i><i class="pin" aria-hidden="true"></i><span>茹曦酒店</span></div>
       <a class="btn" href="https://www.google.com/maps/search/?api=1&amp;query=%E8%8C%B9%E6%9B%A6%E9%85%92%E5%BA%97%20%E5%8F%B0%E5%8C%97%E5%B8%82%E6%9D%BE%E5%B1%B1%E5%8D%80%E6%95%A6%E5%8C%96%E5%8C%97%E8%B7%AF100%E8%99%9F" target="_blank" rel="noopener">GOOGLE MAPS ↗</a>
+      <div class="cal"><a class="btn" id="gcal" href="#" target="_blank" rel="noopener">＋ Google 日曆</a><a class="btn" id="ical" href="#" download="SpringVow-wedding.ics">＋ Apple／其他日曆</a></div>
       <div class="stub-foot" aria-hidden="true"><span class="barcode"></span><span>No.0320 · SPRING VOW</span></div>
     </div>
   </div>
 </section>
 
-<!-- 06 · CREDITS -->
+<!-- 06 · 抽限定小卡 -->
+<section id="pd" class="drop page sheet" aria-label="抽限定小卡">
+  <div class="tags a a-up"><span class="pill red">LUCKY DRAW</span><span class="tag">PHOTOCARD</span></div>
+  <div class="draw-head a a-up" style="--d:.15s"><h2>抽一張限定小卡</h2><p>撕開卡包，看看你抽到哪一張</p></div>
+  <div class="pack-scene a a-pop noflip" id="packScene" style="--d:.4s">
+    <div class="dcard" id="dcard" aria-live="polite">
+      <div class="ph"><img id="dImg" src="img/t4.jpg" alt="" width="800" height="800"><i class="holo" aria-hidden="true"></i>
+        <span class="rar" id="dRar">R</span>
+        <div class="txt"><b id="dName"></b><span id="dLine"></span><small id="dNo"></small></div></div>
+    </div>
+    <button type="button" class="pack" id="pack" aria-label="撕開卡包，抽一張小卡">
+      <span class="pk-top" aria-hidden="true"></span>
+      <span class="pk-body" aria-hidden="true"><span>SPRING VOW</span><b>Photo<br>card</b><span>RANDOM 1 OF 7</span><i>點一下撕開</i></span>
+    </button>
+  </div>
+  <div class="draw-ctrl" id="drawCtrl"><button type="button" id="again">↻ 再抽一張</button><button type="button" class="pri" id="saveCard">⤓ 存下這張</button></div>
+  <p class="collect" id="collect">已收集 <b>0</b> / 7</p>
+</section>
+
+<!-- 07 · CREDITS -->
 <section id="p6" class="drop page credits sheet" aria-label="結尾">
   <div class="card backcover">
     <div class="hearts" aria-hidden="true"><i style="--dx:-70px;--hd:1.6s;--t:3.4s;--fs:16px;--c:#B9A3DC;--rr:-20deg">♥</i><i style="--dx:50px;--hd:2.1s;--t:3.0s;--fs:12px;--c:#FFFFFF;--rr:15deg">✿</i><i style="--dx:-20px;--hd:2.8s;--t:3.6s;--fs:20px;--c:#7A62A8;--rr:10deg">♥</i><i style="--dx:80px;--hd:3.3s;--t:3.2s;--fs:14px;--c:#B9A3DC;--rr:25deg">♥</i><i style="--dx:-90px;--hd:3.9s;--t:3.8s;--fs:13px;--c:#D6E1F0;--rr:-10deg">✿</i><i style="--dx:20px;--hd:4.4s;--t:3.1s;--fs:15px;--c:#FFFFFF;--rr:-25deg">♥</i></div>
@@ -859,10 +992,10 @@ var body = document.body;
   }
   window.goPage=go;
   /* 手指拖曳：這一頁跟著手指翻起來，放開後決定翻過去或彈回 */
-  var sy=0,sx=0,st=0,dy=0,mode=null;
-  document.addEventListener('touchstart',function(e){ if(busy||body.classList.contains('locked')) return;
+  var sy=0,sx=0,st=0,dy=0,mode=null,skip=false;
+  document.addEventListener('touchstart',function(e){ skip=!!(e.target.closest&&e.target.closest('.noflip,.viewer')); if(skip||busy||body.classList.contains('locked')) return;
     var t=e.touches[0]; sy=t.clientY; sx=t.clientX; st=Date.now(); dy=0; mode=null; },{passive:true});
-  document.addEventListener('touchmove',function(e){ if(busy||body.classList.contains('locked')) return;
+  document.addEventListener('touchmove',function(e){ if(skip||busy||body.classList.contains('locked')) return;
     var t=e.touches[0], ddy=t.clientY-sy, ddx=t.clientX-sx;
     if(!mode){ if(Math.abs(ddy)<8&&Math.abs(ddx)<8) return; mode=Math.abs(ddy)>Math.abs(ddx)?'v':'h'; }
     if(mode!=='v') return;
@@ -874,17 +1007,17 @@ var body = document.body;
     else if(dy>0 && pv){ pv.classList.remove('anim'); pv.style.transform='translate3d(0,'+(-full+dy)+'px,0)'; c.style.transform='scale('+(1-.1*pr)+')'; if(nx) nx.style.transform=''; }
     else { c.style.transform='translate3d(0,'+(dy*.25)+'px,0)'; }      /* 最後一頁往下：只給一點阻力 */
   },{passive:false});
-  document.addEventListener('touchend',function(){ if(mode!=='v'){ mode=null; return; } mode=null;
+  document.addEventListener('touchend',function(){ if(skip){ skip=false; return; } if(mode!=='v'){ mode=null; return; } mode=null;
     var fast=Date.now()-st<350, dist=Math.abs(dy), want=null;
     if(dist>H()*.16 || (fast&&dist>40)) want=dy<0?cur+1:cur-1;
     if(want!==null && want>=0 && want<sheets.length){ go(want); }
     else { sheets.forEach(function(el){ el.classList.add('anim'); el.style.transform=''; el.style.opacity=''; }); }
   });
   var wheelLock=0;
-  window.addEventListener('wheel',function(e){ if(e.target.closest && e.target.closest('.reel') && Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
+  window.addEventListener('wheel',function(e){ if(body.classList.contains('viewer-open')) return; if(e.target.closest && e.target.closest('.film-scroll') && Math.abs(e.deltaX)>Math.abs(e.deltaY)) return; if(e.target.closest && e.target.closest('.reel') && Math.abs(e.deltaX)>Math.abs(e.deltaY)) return;
     e.preventDefault(); var now=Date.now(); if(now<wheelLock||Math.abs(e.deltaY)<12) return; wheelLock=now+950;
     go(e.deltaY>0?cur+1:cur-1); },{passive:false});
-  document.addEventListener('keydown',function(e){ if(body.classList.contains('locked')) return;
+  document.addEventListener('keydown',function(e){ if(body.classList.contains('locked')||body.classList.contains('viewer-open')) return;
     if(['ArrowDown','PageDown',' '].indexOf(e.key)>-1 && !(e.target.closest&&e.target.closest('button,.reel,a,.pc'))){ e.preventDefault(); go(cur+1); }
     if(['ArrowUp','PageUp'].indexOf(e.key)>-1){ e.preventDefault(); go(cur-1); } });
   for(var k=0;k<dots.length;k++) (function(k){ dots[k].addEventListener('click',function(e){ e.preventDefault(); go(k+1); }); })(k);
@@ -898,115 +1031,223 @@ var body = document.body;
   });
 })();
 
-/* ---------- TRACKLIST 唱盤：左右滑換歌；點唱針放下 → 封面位置換成 YouTube 小畫面播放原曲 ---------- */
+/* ---------- 01 歌詞本：手指劃開封膜 → 往左翻開封面 → 乾燥花掉出來 ---------- */
 (function(){
-  var reel=document.getElementById('reel'); if(!reel) return;
-  var slides=reel.querySelectorAll('.slide'), dots=document.querySelectorAll('#pdots i'), fill=document.getElementById('barfill');
-  var page=document.getElementById('p4'), box=reel.parentNode, art=document.getElementById('ytArt'), np=document.getElementById('np'), idx=0, touched=false;
-  var TR=['audio/track1.mp3','audio/track2.mp3','audio/track3.mp3','audio/track4.mp3'];   /* 不能用 YouTube 時的備用配樂 */
+  var bk=document.querySelector('.booklet'), cv=document.getElementById('wrapfilm'), cover=bk.querySelector('.bk-cover'), hint=document.getElementById('bkHint');
+  var state='sealed';                                   /* sealed → unsealed → opened */
+  function opened(){ state='opened'; bk.classList.add('opened'); bk.classList.remove('noflip'); hint.hidden=true; cover.style.transform='';
+    if(window.burst) setTimeout(function(){ window.burst(18,'petal'); },500); }
+  if(reduce || !cv.getContext){ cv.remove(); opened(); return; }
+  bk.classList.add('noflip');
+  var g=cv.getContext('2d'), dpr=Math.min(2,window.devicePixelRatio||1), W=0, H=0, drawn=false, path=0, last=null;
+  function paint(){
+    var r=cv.getBoundingClientRect(); if(r.width<10) return false;
+    W=cv.width=Math.round(r.width*dpr); H=cv.height=Math.round(r.height*dpr);
+    g.globalCompositeOperation='source-over'; g.clearRect(0,0,W,H);
+    var gr=g.createLinearGradient(0,0,W,H); gr.addColorStop(0,'rgba(255,255,255,.42)'); gr.addColorStop(.5,'rgba(236,231,242,.28)'); gr.addColorStop(1,'rgba(255,255,255,.45)');
+    g.fillStyle=gr; g.fillRect(0,0,W,H);
+    g.save(); g.globalAlpha=.55; g.rotate(-.5);                                 /* 斜斜的反光 */
+    [[.1,.06],[.35,.03],[.62,.08]].forEach(function(b){ var l=g.createLinearGradient(0,0,W,0); l.addColorStop(0,'rgba(255,255,255,0)'); l.addColorStop(.5,'rgba(255,255,255,.9)'); l.addColorStop(1,'rgba(255,255,255,0)'); g.fillStyle=l; g.fillRect(-W,b[0]*H*1.6,W*3,b[1]*H); });
+    g.restore();
+    g.strokeStyle='rgba(255,255,255,.35)'; g.lineWidth=1*dpr;                  /* 封膜的小皺褶 */
+    for(var i=0;i<14;i++){ var x=Math.random()*W, y=Math.random()*H; g.beginPath(); g.moveTo(x,y); g.quadraticCurveTo(x+20*dpr,y+8*dpr,x+40*dpr,y-4*dpr); g.stroke(); }
+    var cx=W-46*dpr, cy=48*dpr, rr=30*dpr;                                    /* 貼紙 */
+    g.fillStyle='#7A62A8'; g.beginPath(); g.arc(cx,cy,rr,0,7); g.fill();
+    g.fillStyle='#fff'; g.textAlign='center'; g.font='700 '+(9*dpr)+'px "DM Mono",monospace'; g.fillText('NEW',cx,cy-4*dpr); g.fillText('SEALED',cx,cy+9*dpr);
+    drawn=true; return true;
+  }
+  function peel(){ if(state!=='sealed') return; state='unsealed'; cv.classList.add('peel'); hint.textContent='← 往左翻開歌詞本';
+    setTimeout(function(){ cv.remove(); },900); }
+  function erase(x,y){ g.globalCompositeOperation='destination-out'; g.lineCap='round'; g.lineJoin='round'; g.lineWidth=48*dpr;
+    g.beginPath(); if(last){ g.moveTo(last[0],last[1]); path+=Math.hypot(x-last[0],y-last[1]); } else g.moveTo(x,y); g.lineTo(x+.1,y); g.stroke(); last=[x,y];
+    if(path>W*1.5) peel(); }
+  var down=false, moved=0, p0=null;
+  cv.addEventListener('pointerdown',function(e){ if(!drawn && !paint()) return; down=true; moved=0; last=null; p0=[e.clientX,e.clientY]; try{ cv.setPointerCapture(e.pointerId); }catch(_){} });
+  cv.addEventListener('pointermove',function(e){ if(!down) return; var r=cv.getBoundingClientRect(); moved=Math.hypot(e.clientX-p0[0],e.clientY-p0[1]); erase((e.clientX-r.left)*dpr,(e.clientY-r.top)*dpr); });
+  function up(){ if(!down) return; down=false; last=null; if(moved<6){ cv.classList.remove('wiggle'); void cv.offsetWidth; cv.classList.add('wiggle'); } }
+  cv.addEventListener('pointerup',up); cv.addEventListener('pointercancel',up);
+  /* 翻到這頁時才畫封膜（才量得到尺寸） */
+  new MutationObserver(function(){ if(document.getElementById('p1').classList.contains('on') && !drawn) setTimeout(paint,50); })
+    .observe(document.getElementById('p1'),{attributes:true,attributeFilter:['class']});
+  window.addEventListener('resize',function(){ if(state==='sealed' && drawn){ path=0; paint(); } });
+  /* 封面：跟著手指往左翻，翻過一半放手就翻開 */
+  var cd=false, cx0=0, ang=0, cw=1;
+  cover.addEventListener('pointerdown',function(e){ if(state!=='unsealed') return; cd=true; cx0=e.clientX; ang=0; cw=cover.getBoundingClientRect().width; cover.classList.add('drag'); try{ cover.setPointerCapture(e.pointerId); }catch(_){} });
+  cover.addEventListener('pointermove',function(e){ if(!cd) return; ang=Math.max(0,Math.min(155,(cx0-e.clientX)/cw*190)); cover.style.transform='rotateY('+(-ang)+'deg)'; });
+  function cup(e){ if(!cd) return; cd=false; cover.classList.remove('drag');
+    if(ang>50 || Math.abs((e.clientX||cx0)-cx0)<6){ opened(); } else { cover.style.transform=''; } }
+  cover.addEventListener('pointerup',cup); cover.addEventListener('pointercancel',cup);
+  /* 提示文字也是按鈕：不方便滑的人點一下就好 */
+  hint.addEventListener('click',function(){ if(state==='sealed'){ if(!drawn) paint(); peel(); } else if(state==='unsealed') opened(); });
+})();
+
+/* ---------- 04 膠捲故事：拖動底片、點一格放大、翻背面看故事；有主題曲的背面放 YouTube ---------- */
+(function(){
+  var page=document.getElementById('p4'), sc=document.getElementById('filmScroll'), frames=[].slice.call(document.querySelectorAll('.frame')),
+      count=document.getElementById('fCount'), playBtn=document.getElementById('fPlay');
+  var V=document.getElementById('viewer'), card=document.getElementById('vCard'), front=document.getElementById('vFront'), back=document.getElementById('vBack'),
+      flipBtn=document.getElementById('vFlip'), song=document.getElementById('vSong'), box=document.getElementById('ytBox'), np=document.getElementById('np');
+  var cur=0, vi=0, isBack=false, projT=null, lastFocus=null;
+  var N=frames.length, pad=function(n){ return (n<10?'0':'')+n; };
+  function center(i,smooth){ var f=frames[i]; sc.scrollTo({left:f.offsetLeft+f.offsetWidth/2-sc.clientWidth/2,behavior:(smooth&&!reduce)?'smooth':'auto'}); }
+  function mark(i){ cur=i; count.textContent=pad(i+1)+' / '+pad(N); frames.forEach(function(f,k){ f.classList.toggle('cur',k===i); }); }
+  var st; sc.addEventListener('scroll',function(){ clearTimeout(st); st=setTimeout(function(){
+    var mid=sc.scrollLeft+sc.clientWidth/2, best=0, bd=1e9;
+    frames.forEach(function(f,k){ var d=Math.abs(f.offsetLeft+f.offsetWidth/2-mid); if(d<bd){ bd=d; best=k; } }); mark(best); },80); },{passive:true});
+  document.getElementById('fPrev').addEventListener('click',function(){ stopProj(); var i=Math.max(0,cur-1); mark(i); center(i,true); });
+  document.getElementById('fNext').addEventListener('click',function(){ stopProj(); var i=Math.min(N-1,cur+1); mark(i); center(i,true); });
+  /* 放映：一格一格自動前進，帶老放映機的閃爍 */
+  function stopProj(){ if(!projT) return; clearInterval(projT); projT=null; page.classList.remove('projecting'); playBtn.textContent='▶ 放映'; playBtn.setAttribute('aria-pressed','false'); }
+  playBtn.addEventListener('click',function(){ if(projT){ stopProj(); return; }
+    page.classList.add('projecting'); playBtn.textContent='❚❚ 停止'; playBtn.setAttribute('aria-pressed','true');
+    var i=cur>=N-1?0:cur; mark(i); center(i,true);
+    projT=setInterval(function(){ if(cur>=N-1){ stopProj(); return; } mark(cur+1); center(cur,true); },2200); });
+  ['pointerdown','wheel'].forEach(function(ev){ sc.addEventListener(ev,stopProj,{passive:true}); });
+  new MutationObserver(function(){ if(!page.classList.contains('on')){ stopProj(); return; } setTimeout(function(){ mark(0); center(0,false); },30); })
+    .observe(page,{attributes:true,attributeFilter:['class']});
+
+  /* --- 點開一格 --- */
+  function d(i,k){ return frames[i].getAttribute('data-'+k)||''; }
+  function fill(i){
+    vi=i; var f=frames[i], img=document.getElementById('vImg');
+    img.src=d(i,'img'); img.alt=d(i,'title');
+    document.getElementById('vCode').textContent='▸ '+pad(i+1)+'A  ·  '+d(i,'date');
+    document.getElementById('vTitle').textContent=d(i,'title');
+    document.getElementById('vbNo').textContent=(d(i,'track')||('FRAME '+pad(i+1)));
+    document.getElementById('vbTitle').textContent=d(i,'title');
+    document.getElementById('vbDate').textContent=d(i,'date');
+    var sy=document.getElementById('vbStory'); sy.textContent=d(i,'story'); sy.classList.toggle('todo',!!d(i,'todo') || /^\[/.test(d(i,'story')));
+    song.hidden=!d(i,'yt'); document.getElementById('vSongName').textContent=d(i,'yt')?'♪ 這一刻的歌：'+d(i,'song'):'';
+    document.getElementById('vPrev').disabled=i===0; document.getElementById('vNext').disabled=i===N-1;
+  }
+  function showFace(b){ isBack=b; front.hidden=b; back.hidden=!b; flipBtn.textContent=b?'↻ 翻回照片':'↻ 翻到背面看故事';
+    if(b && d(vi,'yt')) ytShow(); else ytHide(); }
+  function develop(){ card.classList.remove('dev'); void card.offsetWidth; if(!reduce) card.classList.add('dev'); }
+  function open(i){ stopProj(); lastFocus=document.activeElement; fill(i); showFace(false); develop();
+    V.classList.add('open'); V.setAttribute('aria-hidden','false'); body.classList.add('viewer-open'); mark(i); center(i,false);
+    setTimeout(function(){ flipBtn.focus({preventScroll:true}); },60); }
+  function close(){ if(!V.classList.contains('open')) return; ytHide(); V.classList.remove('open'); V.setAttribute('aria-hidden','true'); body.classList.remove('viewer-open');
+    if(lastFocus) try{ lastFocus.focus({preventScroll:true}); }catch(_){} }
+  window.ytClose=close;
+  function flip(){ if(reduce){ showFace(!isBack); return; } card.classList.add('turning'); setTimeout(function(){ showFace(!isBack); card.classList.remove('turning'); },220); }
+  function nav(dir){ var j=vi+dir; if(j<0||j>=N) return; ytHide();
+    if(reduce){ fill(j); showFace(false); mark(j); center(j,false); return; }
+    card.classList.add(dir>0?'out-l':'out-r');
+    setTimeout(function(){ fill(j); showFace(false); card.classList.remove('out-l','out-r'); develop(); mark(j); center(j,false); },250); }
+  frames.forEach(function(f,k){ f.addEventListener('click',function(){ open(k); }); });
+  flipBtn.addEventListener('click',flip);
+  document.getElementById('vPrev').addEventListener('click',function(){ nav(-1); });
+  document.getElementById('vNext').addEventListener('click',function(){ nav(1); });
+  document.getElementById('vClose').addEventListener('click',close);
+  V.addEventListener('click',function(e){ if(e.target===V) close(); });
+  front.addEventListener('click',flip);
+  document.addEventListener('keydown',function(e){ if(!V.classList.contains('open')) return;
+    if(e.key==='Escape') close(); else if(e.key==='ArrowLeft') nav(-1); else if(e.key==='ArrowRight') nav(1); });
+  /* 在照片上左右滑：換上一格／下一格 */
+  var tx=0, ty=0;
+  card.addEventListener('touchstart',function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; },{passive:true});
+  card.addEventListener('touchend',function(e){ var t=e.changedTouches[0], dx=t.clientX-tx, dy=t.clientY-ty; if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.5) nav(dx<0?1:-1); });
+
+  /* --- 背面的 YouTube：翻到背面才出現；訪客自己按播放；記住聽到哪裡 --- */
   var canEmbed=/^https?:$/.test(location.protocol) && !/claude|anthropic/.test(location.hostname);
-  var player=null, ready=false, apiState=0, playing=false, mode=null, on=false, failT, waitT, dropAt=0, blocked=false, resumeFrom=0;
-  /* 手機瀏覽器有時不讓網頁替訪客按播放：唱針留在唱片上，請訪客點一下封面上的 ▶ */
-  /* 記住每首歌上次聽到哪裡（存在這支手機的瀏覽器裡） */
-  var POSKEY='sv-yt-pos', posT;
+  var player=null, ready=false, apiState=0, playing=false, POSKEY='sv-yt-pos', posT;
   function getPos(id){ try{ return (JSON.parse(localStorage.getItem(POSKEY)||'{}'))[id]||0; }catch(_){ return 0; } }
   function setPos(id,t){ try{ var m=JSON.parse(localStorage.getItem(POSKEY)||'{}'); if(t>0) m[id]=Math.floor(t); else delete m[id]; localStorage.setItem(POSKEY,JSON.stringify(m)); }catch(_){} }
-  function savePos(){ try{ if(player && ready && mode==='yt' && player.getVideoData){ var d=player.getVideoData(), t=player.getCurrentTime(), dur=player.getDuration();
-      if(d && d.video_id){ setPos(d.video_id, (dur && t>dur-8) ? 0 : t); } } }catch(_){} }
+  function savePos(){ try{ if(player&&ready&&player.getVideoData){ var v=player.getVideoData(), t=player.getCurrentTime(), du=player.getDuration(); if(v&&v.video_id) setPos(v.video_id,(du&&t>du-8)?0:t); } }catch(_){} }
   function mmss(t){ t=Math.floor(t); return Math.floor(t/60)+':'+('0'+t%60).slice(-2); }
   document.addEventListener('visibilitychange',function(){ if(document.hidden) savePos(); });
   window.addEventListener('pagehide',savePos);
-  function asTap(){ blocked=true; playing=false; setArm(true); say('▶ 請點一下封面上的播放鍵開始'+ytLink(idx)); }
-
-  function needleOf(i){ return slides[i].querySelector('.needle'); }
-  function info(i){ var n=needleOf(i); return {id:n.getAttribute('data-yt'), title:n.getAttribute('data-title')}; }
-  function setArm(v){ for(var k=0;k<slides.length;k++){ slides[k].classList.toggle('playing',v&&k===idx);
-      var b=slides[k].querySelector('.yt-btn'); if(b) b.classList.toggle('on',v&&k===idx); } }
-  function say(html){ np.innerHTML=html; np.classList.toggle('show',!!html); }
-  function ytLink(i){ return '<a href="https://www.youtube.com/watch?v='+info(i).id+'" target="_blank" rel="noopener">YouTube ↗</a>'; }
-  /* 把 YouTube 小畫面對齊到目前這首的封面照片上 */
-  function placeArt(){ var r=slides[idx].querySelector('.art').getBoundingClientRect(), p=box.getBoundingClientRect();
-    if(r.width<10) return; var w=Math.max(200,r.width), h=Math.max(200,r.height);
-    art.style.left=(r.left-p.left-(w-r.width)/2)+'px'; art.style.top=(r.top-p.top-(h-r.height)/2)+'px'; art.style.width=w+'px'; art.style.height=h+'px'; }
-  window.addEventListener('resize',function(){ if(on) placeArt(); });
-
-  function prepare(){
-    if(!canEmbed || apiState) return; apiState=1;
-    window.onYouTubeIframeAPIReady=function(){
-      apiState=2; art.innerHTML='<div id="ytPlayer"></div>';
-      player=new YT.Player('ytPlayer',{videoId:info(idx).id, playerVars:{playsinline:1,rel:0,controls:1},
-        events:{ onReady:function(){ ready=true; },
-                 onStateChange:function(e){
-                   clearInterval(posT); if(e.data===1) posT=setInterval(savePos,5000); else if(e.data===0) setPos(info(idx).id,0); else if(e.data===2) savePos();
-                   if(e.data===1){ clearTimeout(failT); playing=true; blocked=false; setArm(true); duck(true);
-                     var muted=false; try{ muted=player.isMuted(); }catch(_){}
-                     say(muted?'🔇 點一下畫面上的喇叭就有聲音'+ytLink(idx):'♪ 正在播放 '+info(idx).title+(resumeFrom?'（從 '+mmss(resumeFrom)+' 繼續）':'')+ytLink(idx)); resumeFrom=0; }
-                   else if(e.data===2 && on && Date.now()-dropAt<3000 && player.getCurrentTime()<1){ asTap(); }   /* 瀏覽器擋下自動播放，不是使用者按暫停 */
-                   else if((e.data===2||e.data===0) && on && !blocked){ playing=false; setArm(false); duck(false); say('⏸ 已暫停 · 點唱針或畫面上的 ▶ 繼續'); }
-                 },
+  function duck(v){ if(!window.Music) return; if(v) window.Music.hush(); else window.Music.track(window.Music.MAIN); }
+  function link(id){ return '<a href="https://www.youtube.com/watch?v='+id+'" target="_blank" rel="noopener">在 YouTube 開啟 ↗</a>'; }
+  function fallback(msg){
+    var id=d(vi,'yt'); box.innerHTML='<div class="yt-fallback"><span>'+msg+'</span><button type="button" id="synBtn">♪ 先聽原創配樂版</button>'+link(id)+'</div>';
+    if(player){ try{ player.destroy(); }catch(_){} player=null; ready=false; apiState=0; }
+    document.getElementById('synBtn').addEventListener('click',function(){ if(window.Music) window.Music.track(d(vi,'syn')); np.textContent='♪ 正在播放原創配樂版'; });
+  }
+  function load(){
+    if(apiState) return; apiState=1;
+    window.onYouTubeIframeAPIReady=function(){ apiState=2; box.innerHTML='<div id="ytPlayer"></div>';
+      var id=d(vi,'yt');
+      player=new YT.Player('ytPlayer',{videoId:id,playerVars:{playsinline:1,rel:0,start:getPos(id)>5?getPos(id):0},
+        events:{ onReady:function(){ ready=true; cue(); },
+                 onStateChange:function(e){ clearInterval(posT);
+                   if(e.data===1){ playing=true; duck(true); posT=setInterval(savePos,5000); np.textContent='♪ 正在播放 '+d(vi,'song'); }
+                   else if(e.data===2){ playing=false; savePos(); duck(false); np.textContent='⏸ 已暫停，下次會從這裡繼續'; }
+                   else if(e.data===0){ playing=false; setPos(d(vi,'yt'),0); duck(false); np.textContent=''; } },
                  onError:function(){ fallback('這首的官方影片不開放嵌入'); } }});
     };
-    var t=document.createElement('script'); t.src='https://www.youtube.com/iframe_api'; t.onerror=function(){ apiState=0; }; document.head.appendChild(t);
+    var t=document.createElement('script'); t.src='https://www.youtube.com/iframe_api'; t.onerror=function(){ apiState=0; fallback('YouTube 載入失敗'); }; document.head.appendChild(t);
+    setTimeout(function(){ if(!ready && apiState===1) fallback('YouTube 載入失敗'); },8000);
   }
-  function duck(v){ if(!window.Music) return; if(v) window.Music.hush(); else window.Music.track(window.Music.MAIN); }
+  function cue(){ var id=d(vi,'yt'); if(!id||!player||!ready) return; var p=getPos(id);
+    player.cueVideoById({videoId:id,startSeconds:p>5?p:0}); np.textContent=p>5?'上次聽到 '+mmss(p)+'，按 ▶ 從這裡繼續':'按影片上的 ▶ 播放'; }
+  function ytShow(){ np.textContent='';
+    if(!canEmbed){ fallback('預覽環境無法播放 YouTube，上線到網站後就能聽原曲'); return; }
+    if(player&&ready) cue(); else { box.innerHTML='<div class="yt-fallback"><span>載入 YouTube …</span></div>'; load(); } }
+  function ytHide(){ clearInterval(posT); if(player&&ready){ savePos(); try{ player.pauseVideo(); }catch(_){} } if(playing){ playing=false; } duck(false); }
+  window.trackMusic=function(){ if(window.Music) window.Music.track(window.Music.MAIN); };
+})();
 
-  /* 播不了 YouTube：唱針照樣落下，改播原創配樂（封面照片保留） */
-  function fallback(why){
-    clearTimeout(failT); clearInterval(waitT); mode='fallback'; art.classList.remove('show'); document.body.classList.remove('yt-on');
-    if(player){ try{ player.destroy(); }catch(e){} player=null; ready=false; apiState=0; art.innerHTML=''; }
-    playing=true; setArm(true); if(window.Music) window.Music.track(TR[idx]);
-    say('♪ '+why+'，先播原創配樂'+ytLink(idx));
-  }
-  function playCur(){ if(player&&ready){ placeArt(); art.classList.add('show'); document.body.classList.add('yt-on'); dropAt=Date.now(); blocked=false; try{ player.unMute(); player.setVolume(100); }catch(_){}
-    var id=info(idx).id, st=getPos(id); resumeFrom=st>5?st:0; player.loadVideoById({videoId:id,startSeconds:resumeFrom}); } }
-  function drop(){                     /* 放下唱針 */
-    on=true; setArm(true);
-    if(!canEmbed){ fallback('預覽環境無法播放 YouTube'); return; }
-    mode='yt'; duck(true); say('♪ 載入 '+info(idx).title+' …');
-    if(player&&ready){ playCur(); }                         /* 在點擊當下開始播，手機才允許有聲音 */
-    else { prepare(); clearInterval(waitT); var t0=Date.now();
-      waitT=setInterval(function(){ if(player&&ready){ clearInterval(waitT); if(on&&mode==='yt') playCur(); }
-        else if(Date.now()-t0>6000){ clearInterval(waitT); if(on&&mode==='yt') fallback('YouTube 載入失敗'); } },150); }
-    clearTimeout(failT);
-    failT=setTimeout(function(){ if(on && !playing && mode==='yt' && ready) asTap(); },3000);
-  }
-  function lift(){                     /* 抬起唱針：畫面收回，換回封面照片 */
-    savePos(); clearInterval(posT); on=false; clearTimeout(failT); clearInterval(waitT); playing=false; setArm(false); say('');
-    try{ if(player && player.pauseVideo) player.pauseVideo(); }catch(e){}
-    art.classList.remove('show'); document.body.classList.remove('yt-on'); mode=null;
-    if(window.Music) window.Music.track(window.Music.MAIN);
-  }
-  window.ytClose=function(){ if(on) lift(); };
-  function toggle(){ if(on) lift(); else drop(); }
-  [].forEach.call(slides,function(sl,k){
-    sl.querySelector('.needle').addEventListener('click',function(e){ e.stopPropagation(); if(k===idx) toggle(); });
-    sl.querySelector('.yt-btn').addEventListener('click',function(e){ e.stopPropagation(); if(k===idx) toggle(); });
+/* ---------- 06 抽限定小卡：撕開卡包、隨機抽、收集、存成圖片 ---------- */
+(function(){
+  var CARDS=[
+    {img:'img/groom.jpg',name:'LiJen',line:'主唱擔當報到！謝謝你來',rar:'R'},
+    {img:'img/bride.jpg',name:'Hsinti',line:'門面擔當在這裡，春天見 ♡',rar:'R'},
+    {img:'img/cover.jpg',name:'Spring Vow',line:'我們要結婚了！',rar:'R'},
+    {img:'img/t1.jpg',name:'Hello',line:'一切從那場演唱會開始',rar:'R'},
+    {img:'img/t2.jpg',name:'Bon Voyage',line:'謝謝你一路陪著我們',rar:'R'},
+    {img:'img/t3.jpg',name:'Yes!',line:'她說好了！',rar:'R'},
+    {img:'img/t4.jpg',name:'Spring Vow',line:'2027.03.20，等你來 ♡',rar:'SP'}
+  ];
+  var scene=document.getElementById('packScene'), pack=document.getElementById('pack'), ctrl=document.getElementById('drawCtrl'), col=document.getElementById('collect');
+  var KEY='sv-cards', got=[], curI=-1, busy=false;
+  try{ got=JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(_){ got=[]; }
+  function showCount(){ col.innerHTML='已收集 <b>'+got.length+'</b> / '+CARDS.length+(got.length>=CARDS.length?' · 全部收集完成 ♡':''); }
+  showCount();
+  function pick(){ var left=CARDS.map(function(_,i){ return i; }).filter(function(i){ return got.indexOf(i)<0 && i!==curI; });
+    if(!left.length) left=CARDS.map(function(_,i){ return i; }).filter(function(i){ return i!==curI; });
+    return left[Math.floor(Math.random()*left.length)]; }
+  function fill(i){ var c=CARDS[i]; curI=i;
+    document.getElementById('dImg').src=c.img; document.getElementById('dImg').alt=c.name+' 小卡';
+    document.getElementById('dName').textContent=c.name; document.getElementById('dLine').textContent=c.line;
+    var r=document.getElementById('dRar'); r.textContent=c.rar; r.classList.toggle('sp',c.rar==='SP');
+    document.getElementById('dNo').textContent='No.'+(i+1)+' / '+CARDS.length+' · SPRING VOW'; }
+  function tear(){ if(busy||scene.classList.contains('torn')) return; busy=true; fill(pick());
+    scene.classList.add('torn'); if(window.burst) setTimeout(function(){ window.burst(26,'petal'); },700);
+    setTimeout(function(){ scene.classList.add('shown'); ctrl.classList.add('show'); busy=false;
+      if(got.indexOf(curI)<0){ got.push(curI); try{ localStorage.setItem(KEY,JSON.stringify(got)); }catch(_){} } showCount();
+      if(CARDS[curI].rar==='SP' && window.burst) window.burst(60,'confetti'); },reduce?0:1300); }
+  pack.addEventListener('click',tear);
+  var px=0,py=0; pack.addEventListener('pointerdown',function(e){ px=e.clientX; py=e.clientY; });
+  pack.addEventListener('pointerup',function(e){ if(Math.hypot(e.clientX-px,e.clientY-py)>30) tear(); });
+  document.getElementById('again').addEventListener('click',function(){ ctrl.classList.remove('show'); scene.classList.remove('shown','torn'); setTimeout(function(){ pack.focus({preventScroll:true}); },400); });
+  /* 存成圖片 */
+  document.getElementById('saveCard').addEventListener('click',function(){
+    var c=CARDS[curI], W=600, H=900, cv=document.createElement('canvas'), g=cv.getContext('2d'); cv.width=W; cv.height=H;
+    var im=new Image(); im.onload=function(){
+      g.fillStyle='#fff'; g.beginPath(); g.roundRect?g.roundRect(0,0,W,H,36):g.rect(0,0,W,H); g.fill();
+      g.save(); g.beginPath(); g.roundRect?g.roundRect(16,16,W-32,H-32,24):g.rect(16,16,W-32,H-32); g.clip();
+      var s=Math.max((W-32)/im.width,(H-32)/im.height), w=im.width*s, h=im.height*s; g.drawImage(im,16+(W-32-w)/2,16+(H-32-h)/2,w,h);
+      var gr=g.createLinearGradient(0,H*.6,0,H); gr.addColorStop(0,'rgba(46,42,64,0)'); gr.addColorStop(1,'rgba(46,42,64,.8)'); g.fillStyle=gr; g.fillRect(0,0,W,H); g.restore();
+      g.fillStyle='#fff'; g.font='400 58px "Cherry Bomb One",sans-serif'; g.fillText(c.name,44,H-120);
+      g.font='500 28px "Noto Sans TC",sans-serif'; g.fillText(c.line,44,H-76);
+      g.font='500 18px "DM Mono",monospace'; g.globalAlpha=.85; g.fillText('No.'+(curI+1)+' / '+CARDS.length+' · SPRING VOW · 2027.03.20',44,H-44); g.globalAlpha=1;
+      g.fillStyle=c.rar==='SP'?'#E8C77A':'rgba(46,42,64,.65)'; g.fillRect(40,40,c.rar==='SP'?64:46,34); g.fillStyle=c.rar==='SP'?'#3B3552':'#fff'; g.font='500 20px "DM Mono",monospace'; g.fillText(c.rar,52,64);
+      cv.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='SpringVow-photocard-'+(curI+1)+'.png'; body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },2000); },'image/png');
+    }; im.src=c.img;
   });
+})();
 
-  /* --- 換歌：唱針放著就直接播下一首 --- */
-  function setCur(i){ var changed=i!==idx; idx=i;
-    for(var k=0;k<slides.length;k++){ slides[k].classList.toggle('cur',k===i); dots[k].classList.toggle('on',k===i); }
-    fill.style.width=((i+1)/slides.length*100)+'%';
-    if(!changed) return;
-    if(on && mode==='yt'){ savePos(); setArm(true); say('♪ 載入 '+info(i).title+' …'); if(player&&ready){ art.classList.remove('show'); setTimeout(playCur,380); } }
-    else if(on && mode==='fallback'){ setArm(true); if(window.Music) window.Music.track(TR[i]); say('♪ 先播原創配樂'+ytLink(i)); }
-    else setArm(false);
-  }
-  window.trackMusic=function(){ if(window.Music && !on) window.Music.track(window.Music.MAIN); };
-  function go(i){ i=(i+slides.length)%slides.length; reel.scrollTo({left:i*reel.clientWidth,behavior:reduce?'auto':'smooth'}); setCur(i); }
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting && e.intersectionRatio>.6) setCur(Array.prototype.indexOf.call(slides,e.target)); }); },{root:reel,threshold:[.6]});
-    for(var k=0;k<slides.length;k++) io.observe(slides[k]);
-  }
-  document.getElementById('prev').addEventListener('click',function(){ touched=true; go(idx-1); });
-  document.getElementById('next').addEventListener('click',function(){ touched=true; go(idx+1); });
-  ['pointerdown','wheel','touchstart'].forEach(function(ev){ reel.addEventListener(ev,function(){ touched=true; },{passive:true}); });
-  reel.addEventListener('keydown',function(e){ if(e.key==='ArrowRight'){touched=true;go(idx+1);} if(e.key==='ArrowLeft'){touched=true;go(idx-1);} });
-  var wasOn=false;
-  new MutationObserver(function(){
-    var v=page.classList.contains('on'); if(v===wasOn) return; wasOn=v;
-    if(v){ prepare(); if(!touched){ reel.scrollLeft=0; setCur(0); } }
-  }).observe(page,{attributes:true,attributeFilter:['class']});
+/* ---------- 05 門票：加入行事曆 ---------- */
+(function(){
+  var title='楊立任 & 王心玓 婚宴', loc='茹曦酒店 ILLUME TAIPEI 斯賓諾莎宴會廳 5F, 台北市松山區敦化北路100號',
+      url=location.href.split('#')[0], desc='Spring Vow ♡ 2027.03.20（六）12:00 午宴開席\n喜帖：'+url;
+  document.getElementById('gcal').href='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(title)+'&dates=20270320T040000Z/20270320T070000Z&location='+encodeURIComponent(loc)+'&details='+encodeURIComponent(desc);
+  var esc=function(t){ return t.replace(/\\/g,'\\\\').replace(/,/g,'\\,').replace(/;/g,'\;').replace(/\n/g,'\\n'); };
+  var ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SpringVow//Invitation//ZH','BEGIN:VEVENT','UID:springvow-20270320@lijen-hsinti','DTSTAMP:20261125T000000Z',
+    'DTSTART:20270320T040000Z','DTEND:20270320T070000Z','SUMMARY:'+esc(title),'LOCATION:'+esc(loc),'DESCRIPTION:'+esc(desc),
+    'BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:'+esc('明天就是立任 & 心玓的婚宴囉！'),'END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  document.getElementById('ical').href='data:text/calendar;charset=utf-8,'+encodeURIComponent(ics);
 })();
 
 /* ---------- 倒數：固定到 2027-03-20 12:00 台灣時間（UTC+8） ---------- */
